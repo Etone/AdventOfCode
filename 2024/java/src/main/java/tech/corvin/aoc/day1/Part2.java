@@ -8,14 +8,12 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Part2 implements Part<Integer> {
-
     List<Integer> left = new ArrayList<>();
     List<Integer> right = new ArrayList<>();
 
-
     @Override
-    public Integer solve() throws IOException {
-        var input = Helper.getResourceFileAsString("day2/input1.txt");
+    public Integer solve(String inputFilePath) throws IOException {
+        var input = Helper.getResourceFileAsString(inputFilePath);
         parseInput(input);
         return calculateSimilarityBetweenLists();
     }

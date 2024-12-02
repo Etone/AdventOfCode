@@ -9,9 +9,10 @@ import java.util.List;
 
 
 public class Part1 implements Part<Integer> {
+
     @Override
-    public Integer solve() throws IOException {
-        var input = Helper.getResourceFileAsString("day2/input1.txt");
+    public Integer solve(String inputFilePath) throws IOException {
+        var input = Helper.getResourceFileAsString(inputFilePath);
         var reports = parseInput(input);
         return reports.stream().filter(Report::isSafe).toList().size();
     }

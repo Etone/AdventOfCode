@@ -2,7 +2,7 @@ package tech.corvin.aoc.general;
 
 import java.io.IOException;
 
-public interface Part<Output> {
+public interface Part<Result> {
 
-    Output solve() throws IOException;
+    Result solve(String inputPath) throws IOException;
 }

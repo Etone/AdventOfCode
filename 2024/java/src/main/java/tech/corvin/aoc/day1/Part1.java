@@ -4,6 +4,7 @@ import tech.corvin.aoc.general.Helper;
 import tech.corvin.aoc.general.IntPair;
 import tech.corvin.aoc.general.Part;
 
+import javax.xml.transform.Result;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,13 +12,12 @@ import java.util.Collections;
 import java.util.List;
 
 public class Part1 implements Part<Integer> {
-
     List<Integer> left = new ArrayList<>();
     List<Integer> right = new ArrayList<>();
 
     @Override
-    public Integer solve() throws IOException {
-        var input = Helper.getResourceFileAsString("day2/input1.txt");
+    public Integer solve(String inputFilePath) throws IOException {
+        var input = Helper.getResourceFileAsString(inputFilePath);
 
         parseInput(input);
         return calculateDifferenceBetweenLocations(pairUpRawLists()).stream().mapToInt(Integer::intValue).sum();
