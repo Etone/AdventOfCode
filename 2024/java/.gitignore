@@ -40,3 +40,7 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+### AoC Inputs ###
+**/src/main/resources/**/input1.txt
+**/src/main/resources/**/input2.txt
