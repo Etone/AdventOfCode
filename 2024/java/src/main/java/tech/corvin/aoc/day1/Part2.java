@@ -1,19 +1,22 @@
 package tech.corvin.aoc.day1;
 
+import tech.corvin.aoc.general.Helper;
 import tech.corvin.aoc.general.Part;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class Part2 implements Part<String, Integer> {
+public class Part2 implements Part<Integer> {
 
     List<Integer> left = new ArrayList<>();
     List<Integer> right = new ArrayList<>();
 
 
     @Override
-    public Integer solve(String docOfLocations) {
-        parseInput(docOfLocations);
+    public Integer solve() throws IOException {
+        var input = Helper.getResourceFileAsString("day2/input1.txt");
+        parseInput(input);
         return calculateSimilarityBetweenLists();
     }
 

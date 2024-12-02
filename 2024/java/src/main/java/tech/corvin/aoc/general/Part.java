@@ -1,6 +1,8 @@
 package tech.corvin.aoc.general;
 
-public interface Part<Input, Output> {
+import java.io.IOException;
 
-    Output solve(Input i);
+public interface Part<Output> {
+
+    Output solve() throws IOException;
 }

@@ -1,15 +1,19 @@
 package tech.corvin.aoc.day2;
 
+import tech.corvin.aoc.general.Helper;
 import tech.corvin.aoc.general.Part;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
 
-public class Part2 implements Part<String, Integer> {
+public class Part2 implements Part<Integer> {
     @Override
-    public Integer solve(String reportsDocument) {
-        var reports = parseInput(reportsDocument);
+    public Integer solve() throws IOException {
+        var input = Helper.getResourceFileAsString("day2/input1.txt");
+
+        var reports = parseInput(input);
         return reports.stream().filter(Report::isSafeDampened).toList().size();
     }
 
