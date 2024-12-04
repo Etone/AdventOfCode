@@ -1,11 +1,10 @@
 package tech.corvin.aoc.day4;
 
-import tech.corvin.aoc.general.Grid;
+import tech.corvin.aoc.general.grid.Grid;
 import tech.corvin.aoc.general.Helper;
 import tech.corvin.aoc.general.Part;
 
 import java.io.IOException;
-import java.util.stream.IntStream;
 
 public class Part1 implements Part<Integer> {
 

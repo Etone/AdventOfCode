@@ -1,9 +1,9 @@
-package tech.corvin.aoc.general;
+package tech.corvin.aoc.general.grid;
 
 import java.util.List;
 import java.util.stream.Stream;
 
-import static tech.corvin.aoc.general.Coordinate.*;
+import static tech.corvin.aoc.general.grid.Coordinate.*;
 
 public record Grid<T>(T[][] value) {
 
@@ -35,10 +35,26 @@ public record Grid<T>(T[][] value) {
         return value[0].length;
     }
 
+    public Coordinate topLeft() {
+        return new Coordinate(0,0);
+    }
+
+    public Coordinate topRight() {
+        return new Coordinate(0,width());
+    }
+
+    public Coordinate bottomLeft() {
+        return new Coordinate(length(),0);
+    }
+
+    public Coordinate bottomRight() {
+        return new Coordinate(length(),width());
+    }
+
     public List<T> getAdjacent(Coordinate center, List<Coordinate> offsets) {
         return offsets
                 .stream()
-                .map((offset) -> getCell(center.row() + offset.row(), center.column() + offset.column()))
+                .map((offset) -> getCell(center.offset(offset)))
                 .toList();
     }
 

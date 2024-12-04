@@ -1,13 +1,16 @@
 package tech.corvin.aoc.day4;
 
-import tech.corvin.aoc.general.Coordinate;
-import tech.corvin.aoc.general.Grid;
+import tech.corvin.aoc.general.grid.Coordinate;
+import tech.corvin.aoc.general.grid.Grid;
 import tech.corvin.aoc.general.Helper;
 import tech.corvin.aoc.general.Part;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+
+import static tech.corvin.aoc.general.grid.Coordinate.BOTTOM_RIGHT;
+import static tech.corvin.aoc.general.grid.Coordinate.TOP_LEFT;
 
 public class Part2 implements Part<Integer> {
 
@@ -36,6 +39,6 @@ public class Part2 implements Part<Integer> {
 
         //get corners of Cell with A
         var corners = grid.getDiagonal(new Coordinate(row, column));
-        return Collections.frequency(corners, "M") == 2 && Collections.frequency(corners, "S") == 2 && !corners.get(0).equals(corners.get(3));
+        return Collections.frequency(corners, "M") == 2 && Collections.frequency(corners, "S") == 2 && grid.getAdjacent(new Coordinate(row, column), List.of(TOP_LEFT, BOTTOM_RIGHT)).stream().distinct().count() != 1;
     }
 }
