@@ -28,17 +28,17 @@ public class Part2 implements Part<Integer> {
         var xmas = 0;
         for (int row = 1; row < grid.length() - 1; row++) {
             for (int col = 1; col < grid.width() - 1; col++) {
-                xmas += checkForXMAS(row, col) ? 1 : 0;
+                xmas += checkForXMAS(new Coordinate(row, col)) ? 1 : 0;
             }
         }
         return xmas;
     }
 
-    private boolean checkForXMAS(int row, int column) {
-        if (!grid.getCell(row, column).equals("A")) return false;
+    private boolean checkForXMAS(Coordinate toCheck) {
+        if (!grid.getCell(toCheck).equals("A")) return false;
 
         //get corners of Cell with A
-        var corners = grid.getDiagonal(new Coordinate(row, column));
-        return Collections.frequency(corners, "M") == 2 && Collections.frequency(corners, "S") == 2 && grid.getAdjacent(new Coordinate(row, column), List.of(TOP_LEFT, BOTTOM_RIGHT)).stream().distinct().count() != 1;
+        var corners = grid.getDiagonal(toCheck);
+        return Collections.frequency(corners, "M") == 2 && Collections.frequency(corners, "S") == 2 && grid.getAdjacent(toCheck, List.of(TOP_LEFT, BOTTOM_RIGHT)).stream().distinct().count() != 1;
     }
 }

@@ -1,6 +1,11 @@
 package tech.corvin.aoc.general.grid;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 import static tech.corvin.aoc.general.grid.Coordinate.*;
@@ -36,19 +41,19 @@ public record Grid<T>(T[][] value) {
     }
 
     public Coordinate topLeft() {
-        return new Coordinate(0,0);
+        return new Coordinate(0, 0);
     }
 
     public Coordinate topRight() {
-        return new Coordinate(0,width());
+        return new Coordinate(0, width());
     }
 
     public Coordinate bottomLeft() {
-        return new Coordinate(length(),0);
+        return new Coordinate(length(), 0);
     }
 
     public Coordinate bottomRight() {
-        return new Coordinate(length(),width());
+        return new Coordinate(length(), width());
     }
 
     public List<T> getAdjacent(Coordinate center, List<Coordinate> offsets) {
@@ -70,5 +75,15 @@ public record Grid<T>(T[][] value) {
 
     public List<T> getAllAdjacent(Coordinate center) {
         return Stream.concat(getDiagonal(center).stream(), getOrthogonal(center).stream()).toList();
+    }
+
+    public <R> Stream<R> map(Function<T, R> mapper) {
+        var result = new ArrayList<R>();
+        for (int row = 0; row < length(); row++) {
+            for (int col = 0; col < width(); col++) {
+                result.add(mapper.apply(getCell(row, col)));
+            }
+        }
+        return result.stream();
     }
 }
