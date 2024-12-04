@@ -19,11 +19,11 @@ public class Part1 implements Part<Integer> {
     private List<MultiplyInstruction> getValidInstructions(String input) {
         var validInstructions = new ArrayList<MultiplyInstruction>();
 
-        var pattern = Pattern.compile("(mul\\(\\d{1,3},\\d{1,3}\\))");
+        var pattern = Pattern.compile("mul\\((\\d{1,3}),(\\d{1,3})\\)");
         var matcher = pattern.matcher(input);
 
         while (matcher.find()) {
-            var validInstruction = MultiplyInstruction.fromString(matcher.group(1)); //Matching Groups are indexed starting at 1
+            var validInstruction = new MultiplyInstruction(Integer.parseInt(matcher.group(1)),Integer.parseInt(matcher.group(2))); //Matching Groups are indexed starting at 1
             validInstructions.add(validInstruction);
         }
         return validInstructions;

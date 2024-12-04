@@ -22,7 +22,7 @@ public class Part2 implements Part<Integer> {
     private List<MultiplyInstruction> getValidInstructions(String input) {
         var validInstructions = new ArrayList<MultiplyInstruction>();
 
-        var pattern = Pattern.compile("do\\(\\)|don't\\(\\)|mul\\(\\d{1,3},\\d{1,3}\\)");
+        var pattern = Pattern.compile("do\\(\\)|don't\\(\\)|mul\\((\\d{1,3}),(\\d{1,3})\\)");
         var matcher = pattern.matcher(input);
 
         while (matcher.find()) {
@@ -39,7 +39,7 @@ public class Part2 implements Part<Integer> {
             }
 
             if (enabled) {
-                var validInstruction = MultiplyInstruction.fromString(instructionText); //Matching Groups are indexed starting at 1
+                var validInstruction = new MultiplyInstruction(Integer.parseInt(matcher.group(1)),Integer.parseInt(matcher.group(2)));
                 validInstructions.add(validInstruction);
             }
         }
