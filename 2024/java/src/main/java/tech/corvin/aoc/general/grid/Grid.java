@@ -4,7 +4,6 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -72,18 +71,7 @@ public record Grid<T>(T[][] value) {
         var offsets = List.of(TOP_RIGHT, TOP_LEFT, BOTTOM_RIGHT, BOTTOM_LEFT);
         return getAdjacent(center, offsets);
     }
-
     public List<T> getAllAdjacent(Coordinate center) {
         return Stream.concat(getDiagonal(center).stream(), getOrthogonal(center).stream()).toList();
-    }
-
-    public <R> Stream<R> map(Function<T, R> mapper) {
-        var result = new ArrayList<R>();
-        for (int row = 0; row < length(); row++) {
-            for (int col = 0; col < width(); col++) {
-                result.add(mapper.apply(getCell(row, col)));
-            }
-        }
-        return result.stream();
     }
 }
