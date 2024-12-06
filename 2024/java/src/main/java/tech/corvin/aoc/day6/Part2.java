@@ -8,8 +8,7 @@ import tech.corvin.aoc.general.grid.Grid;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static tech.corvin.aoc.general.grid.Coordinate.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Part2 implements Part<Integer> {
 
@@ -23,21 +22,20 @@ public class Part2 implements Part<Integer> {
     public Integer solve(String inputPath) throws IOException {
         var input = Helper.getResourceFileAsString(inputPath);
         grid = Grid.fromString(input);
-        var loops = 0;
+        AtomicInteger loops = new AtomicInteger();
 
-        for (int row = 0; row < grid.length(); row++) {
-            for (int col = 0; col < grid.width(); col++) {
-                Coordinate toCheck =  new Coordinate(row, col);
+        guard = new Guard(grid.findFirst("^").orElseThrow());
+        calculatePath();
 
-                if (toCheck.equals(guard.getPosition())) continue;
-                var beforeObstacle = grid.getCell(toCheck);
-                grid.setCell(toCheck, "#");
-                if (guardPathLoops()) loops++;
+        path.stream().distinct().forEach((c) -> {
+            guard = new Guard(grid.findFirst("^").orElseThrow());
+            var beforeObstacle = grid.getCell(c);
+            grid.setCell(c, "#");
+            if (guardPathLoops()) loops.getAndIncrement();
+            grid.setCell(c, beforeObstacle);
+        });
 
-                grid.setCell(toCheck, beforeObstacle);
-            }
-        }
-        return loops;
+        return loops.get();
     }
 
     private void calculatePath() {
@@ -55,7 +53,7 @@ public class Part2 implements Part<Integer> {
         while (guard.takeStep(grid) != null) {
 
             // detect Loop
-            if(path.contains(new PathStep(guard.getPosition(), guard.getDirection()))) {
+            if (path.contains(new PathStep(guard.getPosition(), guard.getDirection()))) {
                 return true;
             }
 
