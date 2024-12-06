@@ -1,6 +1,6 @@
 package tech.corvin.aoc.general.grid;
 
-public record Coordinate(
+public record Coordinate (
         int row,
         int column
 ) {

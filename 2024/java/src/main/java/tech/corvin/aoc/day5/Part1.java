@@ -48,8 +48,8 @@ public class Part1 implements Part<Integer> {
 
     private void parsePageUpdates(String pageUpdateString) {
         pageUpdates = Arrays.stream(pageUpdateString.split(System.lineSeparator()))
-                .map((line) -> Arrays.stream(line.split(",")).map(Integer::parseInt).toList()
-                ).toList();
+                .map((line) -> Arrays.stream(line.split(",")).map(Integer::parseInt).toList())
+                .toList();
     }
 
     private boolean matchesRules(List<Integer> updates) {

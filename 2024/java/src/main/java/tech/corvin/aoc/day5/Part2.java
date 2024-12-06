@@ -11,6 +11,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.function.Predicate;
 
+import static java.util.function.Predicate.*;
+
 public class Part2 implements Part<Integer> {
 
     List<IntPair> rules;
@@ -24,7 +26,7 @@ public class Part2 implements Part<Integer> {
 
         return pageUpdates
                 .stream()
-                .filter(Predicate.not(this::matchesRules))
+                .filter(not(this::matchesRules))
                 .map((list) -> list.stream().sorted(this::compare).toList())
                 .map((list) -> list.get(list.size() / 2))
                 .mapToInt(Integer::intValue)

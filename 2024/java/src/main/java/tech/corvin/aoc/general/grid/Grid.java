@@ -4,6 +4,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -29,6 +30,10 @@ public record Grid<T>(T[][] value) {
 
     public T getCell(int row, int column) {
         return value[row][column];
+    }
+
+    public void setCell(Coordinate cell, T value) {
+        this.value[cell.row()][cell.column()] = value;
     }
 
     public int length() {
@@ -73,5 +78,32 @@ public record Grid<T>(T[][] value) {
     }
     public List<T> getAllAdjacent(Coordinate center) {
         return Stream.concat(getDiagonal(center).stream(), getOrthogonal(center).stream()).toList();
+    }
+
+    public Optional<Coordinate> findFirst(T search) {
+        for (int row = 0; row < length(); row++) {
+            for (int col = 0; col < width(); col++) {
+                if (getCell(row, col).equals(search)) {
+                    return Optional.of(new Coordinate(row, col));
+                }
+            }
+        }
+        return Optional.empty();
+    }
+
+
+    public boolean isOOB(Coordinate c) {
+        return c.row() < 0 || c.column() < 0 || c.row() > length() - 1 || c.column() > width() - 1;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder string = new StringBuilder();
+        Arrays.stream(value).forEach((row) -> {
+            Arrays.stream(row).forEach((col -> string.append(col.toString())));
+            string.append(System.lineSeparator());
+        });
+
+        return string.toString();
     }
 }
