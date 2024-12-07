@@ -41,14 +41,6 @@ public class Grid<T> {
         return new Grid<>(copy);
     }
 
-    private T[][] copyArray() {
-        T[][] copy = (T[][])new Object[length()][width()]; //Might not be the best way to clone generic 2D array
-        for (int row = 0; row < length(); row++) {
-            copy[row] = Arrays.copyOf(value[row], width());
-        }
-        return copy;
-    }
-
     public int length() {
         return value.length;
     }
@@ -114,5 +106,13 @@ public class Grid<T> {
         });
 
         return string.toString();
+    }
+
+    private T[][] copyArray() {
+        T[][] copy = (T[][])new Object[length()][width()]; //Might not be the best way to clone generic 2D array
+        for (int row = 0; row < length(); row++) {
+            copy[row] = Arrays.copyOf(value[row], width());
+        }
+        return copy;
     }
 }

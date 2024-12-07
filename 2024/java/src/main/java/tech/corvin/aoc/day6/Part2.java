@@ -17,11 +17,12 @@ public class Part2 implements Part<Integer> {
         var grid = Grid.fromString(input);
         AtomicInteger loops = new AtomicInteger();
 
-        var originalGuard = new Guard(grid.findFirst("^").orElseThrow());
+        var guardStart = grid.findFirst("^").orElseThrow();
+        var originalGuard = new Guard(guardStart);
         var path = calculatePath(originalGuard, grid);
 
         path.parallelStream().forEach((c) -> {
-            var guard = new Guard(grid.findFirst("^").orElseThrow());
+            var guard = new Guard(guardStart);
             var modifiedGrid = grid.modify(c, "#");
             if (guardPathLoops(guard, modifiedGrid)) loops.getAndIncrement();
         });

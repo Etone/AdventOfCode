@@ -9,17 +9,11 @@ import static tech.corvin.aoc.general.grid.Coordinate.*;
 
 public class Guard {
     private Coordinate position;
-
     private Coordinate direction;
 
     public Guard(Coordinate c) {
         position = c;
         direction = TOP;
-    }
-
-    public Guard(Coordinate c, Coordinate direction) {
-        position = c;
-        this.direction = direction;
     }
 
     private final List<Coordinate> turnOrder = List.of(TOP, RIGHT, BOTTOM, LEFT);
