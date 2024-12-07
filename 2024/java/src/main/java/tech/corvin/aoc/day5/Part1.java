@@ -1,7 +1,7 @@
 package tech.corvin.aoc.day5;
 
 import tech.corvin.aoc.general.Helper;
-import tech.corvin.aoc.general.IntPair;
+import tech.corvin.aoc.general.math.IntPair;
 import tech.corvin.aoc.general.Part;
 
 import java.io.IOException;

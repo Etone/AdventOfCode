@@ -1,10 +1,9 @@
 package tech.corvin.aoc.day1;
 
 import tech.corvin.aoc.general.Helper;
-import tech.corvin.aoc.general.IntPair;
+import tech.corvin.aoc.general.math.IntPair;
 import tech.corvin.aoc.general.Part;
 
-import javax.xml.transform.Result;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;

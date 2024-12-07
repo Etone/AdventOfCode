@@ -1,7 +1,7 @@
 package tech.corvin.aoc.day5;
 
 import tech.corvin.aoc.general.Helper;
-import tech.corvin.aoc.general.IntPair;
+import tech.corvin.aoc.general.math.IntPair;
 import tech.corvin.aoc.general.Part;
 
 import java.io.IOException;
@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
-import java.util.function.Predicate;
 
 import static java.util.function.Predicate.*;
 
