@@ -27,7 +27,7 @@ public class Guard {
 
     public Coordinate takeStep(Grid<String> g) {
         var nextPosition = position.offset(direction);
-        if (g.isOOB(nextPosition)) return null;
+        if (nextPosition.isOOB(g)) return null;
         if (g.getCell(nextPosition).equals("#")) {
             direction = turnOrder.get(++obstacles % 4);
             return position;

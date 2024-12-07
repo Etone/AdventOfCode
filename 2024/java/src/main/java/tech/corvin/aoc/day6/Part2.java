@@ -7,6 +7,7 @@ import tech.corvin.aoc.general.grid.Grid;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -15,7 +16,7 @@ public class Part2 implements Part<Integer> {
     Grid<String> grid;
     Guard guard;
 
-    List<Coordinate> path = new ArrayList<>();
+    HashSet<Coordinate> path = new HashSet<>();
 
 
     @Override
@@ -27,7 +28,7 @@ public class Part2 implements Part<Integer> {
         guard = new Guard(grid.findFirst("^").orElseThrow());
         calculatePath();
 
-        path.stream().distinct().forEach((c) -> {
+        path.forEach((c) -> {
             guard = new Guard(grid.findFirst("^").orElseThrow());
             var beforeObstacle = grid.getCell(c);
             grid.setCell(c, "#");

@@ -91,11 +91,6 @@ public record Grid<T>(T[][] value) {
         return Optional.empty();
     }
 
-
-    public boolean isOOB(Coordinate c) {
-        return c.row() < 0 || c.column() < 0 || c.row() > length() - 1 || c.column() > width() - 1;
-    }
-
     @Override
     public String toString() {
         StringBuilder string = new StringBuilder();

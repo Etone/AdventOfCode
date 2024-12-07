@@ -21,4 +21,8 @@ public record Coordinate (
     public Coordinate offset(int row, int column) {
         return offset(new Coordinate(row, column));
     }
+
+    public boolean isOOB(Grid g) {
+        return row < 0 || column < 0 || row > g.length() - 1 || column > g.width() - 1;
+    }
 }
