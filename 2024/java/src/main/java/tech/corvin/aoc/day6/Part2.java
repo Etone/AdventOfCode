@@ -48,17 +48,14 @@ public class Part2 implements Part<Integer> {
 
     // Returns true if path loops
     private boolean guardPathLoops() {
-        List<PathStep> path = new ArrayList<>();
+        HashSet<PathStep> path = new HashSet<>();
         path.add(new PathStep(guard.getPosition(), guard.getDirection()));
 
         while (guard.takeStep(grid) != null) {
-
             // detect Loop
-            if (path.contains(new PathStep(guard.getPosition(), guard.getDirection()))) {
+            if (!path.add(new PathStep(guard.getPosition(), guard.getDirection()))) {
                 return true;
             }
-
-            path.add(new PathStep(guard.getPosition(), guard.getDirection()));
         }
         return false;
     }
