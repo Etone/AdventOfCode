@@ -12,9 +12,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Part2 implements Part<Integer> {
 
     @Override
-    public Integer solve(String inputPath) throws IOException {
-        var input = Helper.getResourceFileAsString(inputPath);
-        var grid = Grid.fromString(input);
+    public Integer solve() throws IOException {
+        var grid = Helper.getInputAsGrid("day6.txt");
         AtomicInteger loops = new AtomicInteger();
 
         var guardStart = grid.findFirst("^").orElseThrow();

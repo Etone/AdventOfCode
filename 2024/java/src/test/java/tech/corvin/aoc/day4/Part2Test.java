@@ -11,7 +11,7 @@ public class Part2Test {
      @Test
     public void test() throws IOException {
          var cut = new Part2();
-         var answer = cut.solve("day4.txt");
+         var answer = cut.solve();
          assertEquals(9, answer);
     }
 }

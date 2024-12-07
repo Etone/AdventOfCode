@@ -3,6 +3,8 @@ package tech.corvin.aoc.general.grid;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 import static tech.corvin.aoc.general.grid.Coordinate.*;
@@ -13,18 +15,6 @@ public class Grid<T> {
 
     public Grid(T[][] value) {
         this.value = value;
-    }
-
-    public static Grid<String> fromString(String gridAsText) {
-        var rows = gridAsText.split(System.lineSeparator());
-
-
-        var result = new String[rows.length][rows[0].length()];
-
-        for (int i = 0; i < rows.length; i++) {
-            result[i] = rows[i].split("");
-        }
-        return new Grid<>(result);
     }
 
     public T getCell(Coordinate c) {
@@ -95,6 +85,24 @@ public class Grid<T> {
             }
         }
         return Optional.empty();
+    }
+
+    public <R> Grid<R> map(Function<T, R> mapper) {
+        R[][] copy = (R[][])new Object[length()][width()];
+        for (int row = 0; row < length(); row++) {
+            for (int col = 0; col < width(); col++) {
+                copy[row][col] = mapper.apply(value[row][col]);
+            }
+        }
+        return new Grid<>(copy);
+    }
+
+    public void forEach(Consumer<T> consumer) {
+        for (int row = 0; row < length(); row++) {
+            for (int col = 0; col < width(); col++) {
+                consumer.accept(value[row][col]);
+            }
+        }
     }
 
     @Override

@@ -11,8 +11,8 @@ import java.util.List;
 public class Part2 implements Part<Integer> {
 
     @Override
-    public Integer solve(String inputFilePath) throws IOException {
-        var input = Helper.getResourceFileAsString(inputFilePath);
+    public Integer solve() throws IOException {
+        var input = Helper.getResourceFileAsString("day2.txt");
 
         var reports = parseInput(input);
         return reports.stream().filter(Report::isSafeDampened).toList().size();

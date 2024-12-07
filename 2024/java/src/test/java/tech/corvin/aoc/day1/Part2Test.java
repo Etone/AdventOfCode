@@ -13,7 +13,7 @@ public class Part2Test {
     void test() throws IOException {
         var cut = new Part2();
 
-        var result = cut.solve("day1.txt");
+        var result = cut.solve();
         assertEquals(31, result);
     }
 }

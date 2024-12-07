@@ -1,15 +1,12 @@
 package tech.corvin.aoc.day6;
 
 import tech.corvin.aoc.general.Helper;
-import tech.corvin.aoc.general.IntPair;
 import tech.corvin.aoc.general.Part;
 import tech.corvin.aoc.general.grid.Coordinate;
 import tech.corvin.aoc.general.grid.Grid;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 
 public class Part1 implements Part<Integer> {
@@ -21,10 +18,8 @@ public class Part1 implements Part<Integer> {
     List<Coordinate> path = new ArrayList<>();
 
     @Override
-    public Integer solve(String inputPath) throws IOException {
-        var input = Helper.getResourceFileAsString(inputPath);
-
-        grid = Grid.fromString(input);
+    public Integer solve() throws IOException {
+        grid= Helper.getInputAsGrid("day6.txt");
         guard = new Guard(grid.findFirst("^").orElseThrow());
         path.add(guard.getPosition());
 

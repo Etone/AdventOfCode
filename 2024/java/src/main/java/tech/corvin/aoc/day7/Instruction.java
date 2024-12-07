@@ -3,6 +3,7 @@ package tech.corvin.aoc.day7;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.BiFunction;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -23,48 +24,33 @@ public record Instruction(
 
     public boolean isSolvable() {
         if (numbers.size() == 1) return numbers.getFirst() == testValue;
-        var multiply = multiply();
-        var add = add();
-        return multiply.isSolvable() || add.isSolvable();
+        return multiply().isSolvable() || add().isSolvable();
     }
 
     public boolean isSolvableWithConcatenation() {
         if (numbers.size() == 1) return numbers.getFirst() == testValue;
-        var multiply = multiply();
-        var add = add();
-        var concat = concatenate();
-        return multiply.isSolvableWithConcatenation()
-                || add.isSolvableWithConcatenation()
-                || concat.isSolvableWithConcatenation();
+        return multiply().isSolvableWithConcatenation()
+                || add().isSolvableWithConcatenation()
+                || concatenate().isSolvableWithConcatenation();
     }
 
     private Instruction multiply() {
-        var multiplied = new ArrayList<>(numbers);
-
-        var firstElement = multiplied.removeFirst();
-        var secondElement = multiplied.removeFirst();
-
-        multiplied.addFirst(firstElement * secondElement);
-        return new Instruction(testValue, multiplied);
+        return operate((a, b) -> a * b);
     }
 
     private Instruction add() {
-        var added = new ArrayList<>(numbers);
-
-        var firstElement = added.removeFirst();
-        var secondElement = added.removeFirst();
-
-        added.addFirst(firstElement + secondElement);
-        return new Instruction(testValue, added);
+        return operate(Long::sum);
     }
 
     private Instruction concatenate() {
-        var concat = new ArrayList<>(numbers);
+        return operate((a, b) -> Long.parseLong("%d%d".formatted(a, b)));
+    }
 
-        var firstElement = concat.removeFirst();
-        var secondElement = concat.removeFirst();
-
-        concat.addFirst(Long.parseLong("%d%d".formatted(firstElement, secondElement)));
-        return new Instruction(testValue, concat);
+    private Instruction operate(BiFunction<Long, Long, Long> operator) {
+        var copy = new ArrayList<>(numbers);
+        var firstElement = copy.removeFirst();
+        var secondElement = copy.removeFirst();
+        copy.addFirst(operator.apply(firstElement, secondElement));
+        return new Instruction(testValue, copy);
     }
 }

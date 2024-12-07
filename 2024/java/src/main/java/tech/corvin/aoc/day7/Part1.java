@@ -10,8 +10,8 @@ import java.util.List;
 public class Part1 implements Part<Long> {
 
     @Override
-    public Long solve(String inputPath) throws IOException {
-        var input = Helper.getResourceFileAsString(inputPath);
+    public Long solve() throws IOException {
+        var input = Helper.getResourceFileAsString("day7.txt");
         var instructions = parseToInstructions(input);
 
         return instructions

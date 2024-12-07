@@ -13,9 +13,8 @@ public class Part1 implements Part<Integer> {
     Grid<String> grid = new Grid<>(new String[][]{{}});
 
     @Override
-    public Integer solve(String inputPath) throws IOException {
-        var wordSearch = Helper.getResourceFileAsString(inputPath);
-        grid = Grid.fromString(wordSearch);
+    public Integer solve() throws IOException {
+        grid = Helper.getInputAsGrid("day4.txt");
         return checkGrid();
     }
 

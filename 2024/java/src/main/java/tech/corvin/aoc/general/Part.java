@@ -4,5 +4,6 @@ import java.io.IOException;
 
 public interface Part<Result> {
 
-    Result solve(String inputPath) throws IOException;
+    Result solve() throws IOException;
+
 }

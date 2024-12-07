@@ -12,8 +12,8 @@ public class Part2 implements Part<Integer> {
     List<Integer> right = new ArrayList<>();
 
     @Override
-    public Integer solve(String inputFilePath) throws IOException {
-        var input = Helper.getResourceFileAsString(inputFilePath);
+    public Integer solve() throws IOException {
+        var input = Helper.getResourceFileAsString("day1.txt");
         parseInput(input);
         return calculateSimilarityBetweenLists();
     }

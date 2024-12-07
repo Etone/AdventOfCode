@@ -20,8 +20,8 @@ public class Part2 implements Part<Integer> {
     List<List<Integer>> pageUpdates;
 
     @Override
-    public Integer solve(String inputPath) throws IOException {
-        var input = Helper.getResourceFileAsString(inputPath);
+    public Integer solve() throws IOException {
+        var input = Helper.getResourceFileAsString("day5.txt");
         parseInput(input);
 
         return pageUpdates

@@ -10,8 +10,8 @@ import java.util.regex.Pattern;
 
 public class Part1 implements Part<Integer> {
     @Override
-    public Integer solve(String inputPath) throws IOException {
-        var instructions = Helper.getResourceFileAsString(inputPath);
+    public Integer solve() throws IOException {
+        var instructions = Helper.getResourceFileAsString("day3.txt");
         var validInstructions = getValidInstructions(instructions);
         return sumInstructions(validInstructions);
     }

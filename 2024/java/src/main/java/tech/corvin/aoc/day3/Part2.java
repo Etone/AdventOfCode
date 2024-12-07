@@ -13,8 +13,8 @@ public class Part2 implements Part<Integer> {
     private boolean enabled = true;
 
     @Override
-    public Integer solve(String inputPath) throws IOException {
-        var instructions = Helper.getResourceFileAsString(inputPath);
+    public Integer solve() throws IOException {
+        var instructions = Helper.getResourceFileAsString("day3.txt");
         var validInstructions = getValidInstructions(instructions);
         return sumInstructions(validInstructions);
     }
