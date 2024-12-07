@@ -1,16 +1,19 @@
 package tech.corvin.aoc.general.grid;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.stream.Stream;
 
 import static tech.corvin.aoc.general.grid.Coordinate.*;
 
-public record Grid<T>(T[][] value) {
+public class Grid<T> {
+
+    private final T[][] value;
+
+    public Grid(T[][] value) {
+        this.value = value;
+    }
 
     public static Grid<String> fromString(String gridAsText) {
         var rows = gridAsText.split(System.lineSeparator());
@@ -32,8 +35,18 @@ public record Grid<T>(T[][] value) {
         return value[row][column];
     }
 
-    public void setCell(Coordinate cell, T value) {
-        this.value[cell.row()][cell.column()] = value;
+    public Grid<T> modify(Coordinate c, T value) {
+        var copy = copyArray();
+        copy[c.row()][c.column()] = value;
+        return new Grid<>(copy);
+    }
+
+    private T[][] copyArray() {
+        T[][] copy = (T[][])new Object[length()][width()]; //Might not be the best way to clone generic 2D array
+        for (int row = 0; row < length(); row++) {
+            copy[row] = Arrays.copyOf(value[row], width());
+        }
+        return copy;
     }
 
     public int length() {
@@ -60,7 +73,7 @@ public record Grid<T>(T[][] value) {
         return new Coordinate(length(), width());
     }
 
-    public List<T> getAdjacent(Coordinate center, List<Coordinate> offsets) {
+    public List<T> getCellValues(Coordinate center, List<Coordinate> offsets) {
         return offsets
                 .stream()
                 .map((offset) -> getCell(center.offset(offset)))
@@ -69,14 +82,15 @@ public record Grid<T>(T[][] value) {
 
     public List<T> getOrthogonal(Coordinate center) {
         var offsets = List.of(TOP, RIGHT, BOTTOM, LEFT);
-        return getAdjacent(center, offsets);
+        return getCellValues(center, offsets);
     }
 
     public List<T> getDiagonal(Coordinate center) {
         var offsets = List.of(TOP_RIGHT, TOP_LEFT, BOTTOM_RIGHT, BOTTOM_LEFT);
-        return getAdjacent(center, offsets);
+        return getCellValues(center, offsets);
     }
-    public List<T> getAllAdjacent(Coordinate center) {
+
+    public List<T> getAdjacent(Coordinate center) {
         return Stream.concat(getDiagonal(center).stream(), getOrthogonal(center).stream()).toList();
     }
 

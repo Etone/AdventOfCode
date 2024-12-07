@@ -39,6 +39,6 @@ public class Part2 implements Part<Integer> {
 
         //get corners of Cell with A
         var corners = grid.getDiagonal(toCheck);
-        return Collections.frequency(corners, "M") == 2 && Collections.frequency(corners, "S") == 2 && grid.getAdjacent(toCheck, List.of(TOP_LEFT, BOTTOM_RIGHT)).stream().distinct().count() != 1;
+        return Collections.frequency(corners, "M") == 2 && Collections.frequency(corners, "S") == 2 && grid.getCellValues(toCheck, List.of(TOP_LEFT, BOTTOM_RIGHT)).stream().distinct().count() != 1;
     }
 }
