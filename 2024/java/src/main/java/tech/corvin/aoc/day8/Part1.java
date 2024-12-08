@@ -4,13 +4,11 @@ import tech.corvin.aoc.general.Helper;
 import tech.corvin.aoc.general.Part;
 import tech.corvin.aoc.general.StringConstants;
 import tech.corvin.aoc.general.grid.Coordinate;
+import tech.corvin.aoc.general.grid.CoordinatePair;
 
 import java.io.IOException;
-import java.util.AbstractMap;
+import java.util.*;
 import java.util.AbstractMap.SimpleEntry;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -25,24 +23,20 @@ public class Part1 implements Part<Integer> {
         for (String character : StringConstants.ALL_CHARACTERS) {
             var antennas = grid.findAll(character);
 
-            var pairs = Helper.pairUpList(antennas);
+            var pairs = Helper.pairUpList(antennas).stream().map(CoordinatePair::fromEntry);
 
-            var mapPairsToDistance = pairs
-                    .stream()
-                    .map((pair) -> Map.entry(pair, pair.getKey().distance(pair.getValue())))
-                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+            var mapPairsToDistance = new HashMap<CoordinatePair, Coordinate>();
+
+            pairs.forEach((pair) -> {
+                mapPairsToDistance.put(pair, pair.first().distance(pair.second()));
+                mapPairsToDistance.put(pair.flip(), pair.second().distance(pair.first()));
+            });
 
             mapPairsToDistance.forEach((pair, distance) -> {
-                var doubleDistance = distance.multiply(2);
-                var firstAntinode = pair.getKey().offset(doubleDistance);
-                if (!firstAntinode.isOOB(grid)) antinodes.add(firstAntinode);
-
-                var flipped = distance.flip().multiply(2);
-                var secondAntinode = pair.getValue().offset(flipped);
-                if (!secondAntinode.isOOB(grid)) antinodes.add(secondAntinode);
+                var antinode = pair.first().offset(distance, 2);
+                if (!antinode.isOOB(grid)) antinodes.add(antinode);
             });
         }
-
         return antinodes.size();
     }
 }
