@@ -9,7 +9,7 @@ public class Part1 implements Part<Integer> {
 
     @Override
     public Integer solve() throws IOException {
-        Helper.getResourceFileAsString("day1.txt");
+        Helper.getResourceFileAsString("day0.txt");
         return 0;
     }
 }
