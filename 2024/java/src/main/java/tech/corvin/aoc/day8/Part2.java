@@ -7,6 +7,8 @@ import tech.corvin.aoc.general.grid.Coordinate;
 import tech.corvin.aoc.general.grid.CoordinatePair;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -17,10 +19,12 @@ public class Part2 implements Part<Integer> {
     public Integer solve() throws IOException {
         var grid = Helper.getInputAsGrid("day8.txt");
 
-        HashSet<Coordinate> antinodes = new HashSet<>();
+        var  antinodes = new HashSet<Coordinate>();
+
+        var lookup = grid.lookup(List.of("."));
 
         for (String character : StringConstants.ALL_CHARACTERS) {
-            var antennas = grid.findAll(character);
+            var antennas = lookup.getOrDefault(character, Collections.emptyList());
             Helper.pairUpList(antennas)
                     .stream()
                     .map(CoordinatePair::fromEntry)

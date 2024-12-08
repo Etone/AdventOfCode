@@ -1,9 +1,6 @@
 package tech.corvin.aoc.general.grid;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Stream;
@@ -98,6 +95,19 @@ public class Grid<T> {
             }
         }
         return result;
+    }
+
+    public Map<T, List<Coordinate>> lookup(List<T> exclude) {
+        var lookup = new HashMap<T, List<Coordinate>>();
+        for (int row = 0; row < length(); row++) {
+            for (int col = 0; col < width(); col++) {
+                var val = getCell(row, col);
+                if (exclude.contains(val)) continue;
+                if (!lookup.containsKey(val)) lookup.put(val, new ArrayList<>());
+                lookup.get(val).add(new Coordinate(row, col));
+            }
+        }
+        return lookup;
     }
 
     public <R> Grid<R> map(Function<T, R> mapper) {

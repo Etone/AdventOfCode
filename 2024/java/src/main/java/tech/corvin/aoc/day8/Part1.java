@@ -20,8 +20,10 @@ public class Part1 implements Part<Integer> {
 
         HashSet<Coordinate> antinodes = new HashSet<>();
 
+        var lookup = grid.lookup(List.of("."));
+
         for (String character : StringConstants.ALL_CHARACTERS) {
-            var antennas = grid.findAll(character);
+            var antennas = lookup.getOrDefault(character, Collections.emptyList());
             // pairUpList to get all Pairs possible for each Item in the List
             Helper.pairUpList(antennas)
                     .stream()
