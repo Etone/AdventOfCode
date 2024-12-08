@@ -10,6 +10,10 @@ public record CoordinatePair(
         return new CoordinatePair(second, first);
     }
 
+    public Coordinate distance() {
+        return first.distance(second);
+    }
+
     public static CoordinatePair fromEntry(Entry<Coordinate, Coordinate> entry) {
         return new CoordinatePair(entry.getKey(), entry.getValue());
     }

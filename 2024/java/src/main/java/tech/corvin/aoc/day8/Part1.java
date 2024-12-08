@@ -22,20 +22,18 @@ public class Part1 implements Part<Integer> {
 
         for (String character : StringConstants.ALL_CHARACTERS) {
             var antennas = grid.findAll(character);
+            // pairUpList to get all Pairs possible for each Item in the List
+            Helper.pairUpList(antennas)
+                    .stream()
+                    .map(CoordinatePair::fromEntry)
+                    // We need to check distance from A -> B and from B -> A, so duplicate all entries with the flipped distance
+                    .map((pair) -> List.of(pair, pair.flip()))
+                    .flatMap(List::stream)
 
-            var pairs = Helper.pairUpList(antennas).stream().map(CoordinatePair::fromEntry);
-
-            var mapPairsToDistance = new HashMap<CoordinatePair, Coordinate>();
-
-            pairs.forEach((pair) -> {
-                mapPairsToDistance.put(pair, pair.first().distance(pair.second()));
-                mapPairsToDistance.put(pair.flip(), pair.second().distance(pair.first()));
-            });
-
-            mapPairsToDistance.forEach((pair, distance) -> {
-                var antinode = pair.first().offset(distance, 2);
-                if (!antinode.isOOB(grid)) antinodes.add(antinode);
-            });
+                    .forEach((pair) -> {
+                        var antinode = pair.first().offset(pair.distance(), 2);
+                        if (!antinode.isOOB(grid)) antinodes.add(antinode);
+                    });
         }
         return antinodes.size();
     }

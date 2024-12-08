@@ -7,10 +7,8 @@ import tech.corvin.aoc.general.grid.Coordinate;
 import tech.corvin.aoc.general.grid.CoordinatePair;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.List;
 
 
 public class Part2 implements Part<Integer> {
@@ -23,23 +21,18 @@ public class Part2 implements Part<Integer> {
 
         for (String character : StringConstants.ALL_CHARACTERS) {
             var antennas = grid.findAll(character);
-            var mapPairsToDistance = new HashMap<CoordinatePair, Coordinate>();
             Helper.pairUpList(antennas)
                     .stream()
                     .map(CoordinatePair::fromEntry)
+                    .map((pair) -> List.of(pair, pair.flip()))
+                    .flatMap(List::stream)
                     .forEach((pair) -> {
-                        mapPairsToDistance.put(pair, pair.first().distance(pair.second()));
-                        mapPairsToDistance.put(pair.flip(), pair.second().distance(pair.first()));
+                        var antinode = pair.first();
+                        while (!antinode.isOOB(grid)) {
+                            antinodes.add(antinode);
+                            antinode = antinode.offset(pair.distance());
+                        }
                     });
-
-            mapPairsToDistance.forEach((pair, distance) -> {
-                var antinode = pair.first();
-
-                while (!antinode.isOOB(grid)) {
-                    antinodes.add(antinode);
-                    antinode = antinode.offset(distance);
-                }
-            });
         }
         return antinodes.size();
     }
