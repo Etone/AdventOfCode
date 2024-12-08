@@ -1,19 +1,18 @@
-package tech.corvin.aoc.day0;
+package tech.corvin.aoc.day8;
 
 
 import org.junit.jupiter.api.Test;
-
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class Part1Test {
+public class Part2Test {
 
     @Test
     void test() throws IOException {
-        var cut = new Part1();
+        var cut = new Part2();
 
         var result = cut.solve();
-        assertEquals(0, result);
+        assertEquals(34, result);
     }
 }

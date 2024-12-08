@@ -1,5 +1,6 @@
 package tech.corvin.aoc.general.grid;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -85,6 +86,18 @@ public class Grid<T> {
             }
         }
         return Optional.empty();
+    }
+
+    public List<Coordinate> findAll(T search) {
+        var result = new ArrayList<Coordinate>();
+        for (int row = 0; row < length(); row++) {
+            for (int col = 0; col < width(); col++) {
+                if (getCell(row, col).equals(search)) {
+                    result.add(new Coordinate(row, col));
+                }
+            }
+        }
+        return result;
     }
 
     public <R> Grid<R> map(Function<T, R> mapper) {

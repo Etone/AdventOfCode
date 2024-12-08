@@ -1,11 +1,15 @@
 package tech.corvin.aoc.general;
 
+import tech.corvin.aoc.general.grid.Coordinate;
 import tech.corvin.aoc.general.grid.Grid;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Helper {
@@ -28,6 +32,16 @@ public class Helper {
 
     public static Grid<Integer> mapStringGridToIntGrid(Grid<String> grid) {
         return grid.map(Integer::parseInt);
+    }
+
+    public static <T> List<Map.Entry<T, T>> pairUpList(List<T> a) {
+        var pairs = new ArrayList<Map.Entry<T, T>>();
+        for (int first = 0; first < a.size(); first++) {
+            for (int second = first + 1; second < a.size(); second++) {
+                pairs.add(Map.entry(a.get(first), a.get(second)));
+            }
+        }
+        return pairs;
     }
 
     private static Grid<String> gridFromString(String gridAsText) {
