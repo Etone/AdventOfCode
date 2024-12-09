@@ -2,83 +2,66 @@ package tech.corvin.aoc.day9;
 
 import tech.corvin.aoc.general.Helper;
 import tech.corvin.aoc.general.Part;
+import tech.corvin.aoc.general.math.IntPair;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.*;
 import java.util.stream.IntStream;
 
 
 public class Part2 implements Part<Long> {
-
-    private static final Integer FREE_DISK = -1;
+    Map<Integer, IntPair> disk = new HashMap<>();
+    Set<IntPair> freeSpaces = new TreeSet<>();
 
     @Override
     public Long solve() throws IOException {
         var diskmap = Helper.getResourceFileAsString("day9.txt");
 
-        var uncompressedDisk = buildDisk(diskmap);
-        var compressedDisk = compressDisk(uncompressedDisk);
+        buildDisk(diskmap);
+        compressDisk();
 
-        return checksum(compressedDisk);
+        return checksum();
     }
 
-
-    private List<FileOnDisk> buildDisk(String diskmap) {
-        var disk = new ArrayList<FileOnDisk>();
-
+    private void buildDisk(String diskmap) {
         var chars = diskmap.split("");
         var fileId = 0;
-
         var nextStart = 0;
-
         for (int i = 0; i < chars.length; i++) {
             var count = Integer.parseInt(chars[i]);
-
             if (count == 0) continue;
-
             if (i % 2 == 0) {
-                disk.add(new FileOnDisk(nextStart, nextStart + count, fileId));
+                disk.put(fileId, new IntPair(nextStart, nextStart + count));
                 fileId++;
             } else {
-                disk.add(new FileOnDisk(nextStart, nextStart + count, FREE_DISK));
+                freeSpaces.add(new IntPair(nextStart, nextStart + count));
             }
             nextStart += count;
-
         }
-        return disk;
     }
 
 
-    private List<FileOnDisk> compressDisk(List<FileOnDisk> uncompressedDisk) {
-        var sortedByFileId = uncompressedDisk.stream().sorted((file1, file2) -> file2.fileId() - file1.fileId()).filter((file) -> file.fileId() != FREE_DISK).toList();
-        AtomicReference<List<FileOnDisk>> freeSpaces = new AtomicReference<>(uncompressedDisk.stream().filter((file) -> file.fileId() == FREE_DISK).toList());
+    private void compressDisk() {
+        var filesByIdReversed = disk.keySet().stream().sorted(Comparator.comparingInt(Integer::intValue).reversed()).toList();
 
-        var compressedDisk = new ArrayList<>(uncompressedDisk);
-
-        sortedByFileId.forEach((file) -> {
-            var freeSpace = freeSpaces.get().stream().filter((freeOnDisk) -> freeOnDisk.size() >= file.size() && freeOnDisk.start() < file.start()).min(Comparator.comparingInt(FileOnDisk::start));
-            if (freeSpace.isPresent()) {
-                var movedFile = new FileOnDisk(freeSpace.get().start(), freeSpace.get().start() + file.size(), file.fileId());
-                var replacedEmptySpace = new FileOnDisk(file.start(), file.end(), FREE_DISK);
-                compressedDisk.remove(file);
-                compressedDisk.add(movedFile);
-                compressedDisk.add(replacedEmptySpace);
-
-                //shrink free space
-                var newFreeSpace = new FileOnDisk(movedFile.end(), freeSpace.get().end(), FREE_DISK);
-                compressedDisk.remove(freeSpace.get());
-                compressedDisk.add(newFreeSpace);
-
-                freeSpaces.set(compressedDisk.stream().filter((f) -> f.fileId() == FREE_DISK).toList());
-            }
-        });
-        return compressedDisk;
+        for (var fileId : filesByIdReversed) {
+            var file = disk.get(fileId);
+            var sizeNeeded = file.diff();
+            var space = freeSpaces.stream().filter((free) -> free.diff() >= sizeNeeded).filter(free -> free.left() < file.left() ).findFirst();
+            if (space.isEmpty()) continue;
+            var newFile = new IntPair(space.get().left(), space.get().left() + sizeNeeded);
+            disk.put(fileId, newFile);
+            freeSpaces.remove(space.get());
+            if (sizeNeeded < space.get().diff()) freeSpaces.add(new IntPair(newFile.right(), space.get().right()));
+        }
     }
 
-    private long checksum(List<FileOnDisk> disk) {
-        return disk.stream().filter((file) -> file.fileId() != FREE_DISK).mapToLong(FileOnDisk::checksum).sum();
+    private long checksum() {
+        var checksum = 0L;
+        for (var file : disk.entrySet()) {
+
+            checksum += IntStream.range(file.getValue().left(), file.getValue().right()).mapToLong((index) -> (long) index * file.getKey()).sum();
+        }
+        return checksum;
     }
 }

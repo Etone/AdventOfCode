@@ -8,7 +8,7 @@ public class Main {
         var result = new Part1().solve();
         System.out.println(result.toString());
 
-        var result2 = new Part2().solve();
+        var result2 = new Part2Unoptimized().solve();
         System.out.println(result2.toString());
     }
 }

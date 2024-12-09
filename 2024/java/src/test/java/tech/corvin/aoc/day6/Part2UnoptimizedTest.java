@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class Part2Test {
+public class Part2UnoptimizedTest {
 
      @Test
     public void test() throws IOException {
