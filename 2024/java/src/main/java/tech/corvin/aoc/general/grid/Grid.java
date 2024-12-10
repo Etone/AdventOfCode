@@ -39,22 +39,6 @@ public class Grid<T> {
         return value[0].length;
     }
 
-    public Coordinate topLeft() {
-        return new Coordinate(0, 0);
-    }
-
-    public Coordinate topRight() {
-        return new Coordinate(0, width());
-    }
-
-    public Coordinate bottomLeft() {
-        return new Coordinate(length(), 0);
-    }
-
-    public Coordinate bottomRight() {
-        return new Coordinate(length(), width());
-    }
-
     public List<T> getCellValues(Coordinate center, List<Coordinate> offsets) {
         return offsets
                 .stream()
@@ -62,23 +46,16 @@ public class Grid<T> {
                 .toList();
     }
 
-    public List<T> getOrthogonal(Coordinate center) {
-        var offsets = List.of(TOP, RIGHT, BOTTOM, LEFT);
+    public List<T> getDiagonalValues(Coordinate center) {
+        var offsets = Stream.of(TOP_RIGHT, TOP_LEFT, BOTTOM_RIGHT, BOTTOM_LEFT)
+                .filter(offset -> !center.offset(offset).isOOB(this))
+                .toList();
         return getCellValues(center, offsets);
-    }
-
-    public List<T> getDiagonal(Coordinate center) {
-        var offsets = List.of(TOP_RIGHT, TOP_LEFT, BOTTOM_RIGHT, BOTTOM_LEFT);
-        return getCellValues(center, offsets);
-    }
-
-    public List<T> getAdjacent(Coordinate center) {
-        return Stream.concat(getDiagonal(center).stream(), getOrthogonal(center).stream()).toList();
     }
 
     public List<Coordinate> getOrthogonalCells(Coordinate center) {
         var offsets = List.of(TOP, RIGHT, BOTTOM, LEFT);
-        return offsets.stream().map(center::offset).toList();
+        return offsets.stream().map(center::offset).filter(c -> !c.isOOB(this)).toList();
     }
 
     public Optional<Coordinate> findFirst(T search) {
@@ -152,7 +129,6 @@ public class Grid<T> {
             var neighbors = findNeighbors(
                     current,
                     neighboringCellProvider,
-                    (c) -> !c.isOOB(this),
                     Predicate.not(seen::contains),
                     (c) -> addedFilter.test(current, c)
             );

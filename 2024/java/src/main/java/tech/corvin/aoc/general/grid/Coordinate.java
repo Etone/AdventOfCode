@@ -1,5 +1,7 @@
 package tech.corvin.aoc.general.grid;
 
+import java.util.List;
+
 public record Coordinate(
         int row,
         int column
@@ -40,5 +42,10 @@ public record Coordinate(
 
     public boolean isOOB(Grid g) {
         return row < 0 || column < 0 || row > g.length() - 1 || column > g.width() - 1;
+    }
+
+    public List<Coordinate> getOrthogonal() {
+        var offsets = List.of(TOP, RIGHT, BOTTOM, LEFT);
+        return offsets.stream().map(this::offset).toList();
     }
 }

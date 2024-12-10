@@ -37,7 +37,7 @@ public class Part2 implements Part<Integer> {
         if (!grid.getCell(toCheck).equals("A")) return false;
 
         //get corners of Cell with A
-        var corners = grid.getDiagonal(toCheck);
+        var corners = grid.getDiagonalValues(toCheck);
         return Collections.frequency(corners, "M") == 2 && Collections.frequency(corners, "S") == 2 && grid.getCellValues(toCheck, List.of(TOP_LEFT, BOTTOM_RIGHT)).stream().distinct().count() != 1;
     }
 }
