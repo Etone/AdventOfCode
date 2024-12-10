@@ -112,6 +112,19 @@ public class Grid<T> {
         }
     }
 
+    /**
+     * Returns a list with all cells that are reachable from the start coordinate which
+     * - fulfill the filter provided by addedFilter
+     * - Contain the target Value given by goal
+     * This can contain duplicate entries, if a Cell is reachable by more than one path.
+     * The Path is not returned. Uses Breath-first search
+     *
+     * @param start Starting coordinate
+     * @param goal Value of cell that is considered a goal
+     * @param neighboringCellProvider Function which provides "reachable" cells (e.g. orthogonal neighbors)
+     * @param addedFilter Filters that cells need to fulfill to be considered
+     * @return The list of coordinates of the cells that can be reached and hold a value provided in goal
+     */
     public List<Coordinate> bfs(
             Coordinate start,
             T goal,
@@ -134,7 +147,6 @@ public class Grid<T> {
             );
 
             seen.add(current);
-
             goals.addAll(neighbors.stream().filter((c) -> getCell(c).equals(goal)).toList());
             queue.addAll(neighbors.stream().filter((c) -> !getCell(c).equals(goal)).toList());
         }

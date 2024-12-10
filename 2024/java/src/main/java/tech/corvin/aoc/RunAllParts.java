@@ -8,15 +8,15 @@ import java.util.List;
 public class RunAllParts {
 
     private static final List<Part> parts = List.of(
-            new tech.corvin.aoc.day1.Part1(), new tech.corvin.aoc.day1.Part2(),
-            new tech.corvin.aoc.day2.Part1(), new tech.corvin.aoc.day2.Part2(),
-            new tech.corvin.aoc.day3.Part1(), new tech.corvin.aoc.day3.Part2(),
-            new tech.corvin.aoc.day4.Part1(), new tech.corvin.aoc.day4.Part2(),
-            new tech.corvin.aoc.day5.Part1(), new tech.corvin.aoc.day5.Part2(),
-            new tech.corvin.aoc.day6.Part1(), new tech.corvin.aoc.day6.Part2(),
-            new tech.corvin.aoc.day7.Part1(), new tech.corvin.aoc.day7.Part2(),
-            new tech.corvin.aoc.day8.Part1(), new tech.corvin.aoc.day8.Part2(),
-            new tech.corvin.aoc.day9.Part1(), new tech.corvin.aoc.day9.Part2(),
+//            new tech.corvin.aoc.day1.Part1(), new tech.corvin.aoc.day1.Part2(),
+//            new tech.corvin.aoc.day2.Part1(), new tech.corvin.aoc.day2.Part2(),
+//            new tech.corvin.aoc.day3.Part1(), new tech.corvin.aoc.day3.Part2(),
+//            new tech.corvin.aoc.day4.Part1(), new tech.corvin.aoc.day4.Part2(),
+//            new tech.corvin.aoc.day5.Part1(), new tech.corvin.aoc.day5.Part2(),
+//            new tech.corvin.aoc.day6.Part1(), new tech.corvin.aoc.day6.Part2(),
+//            new tech.corvin.aoc.day7.Part1(), new tech.corvin.aoc.day7.Part2(),
+//            new tech.corvin.aoc.day8.Part1(), new tech.corvin.aoc.day8.Part2(),
+//            new tech.corvin.aoc.day9.Part1(), new tech.corvin.aoc.day9.Part2(),
             new tech.corvin.aoc.day10.Part1(), new tech.corvin.aoc.day10.Part2()
     );
 
