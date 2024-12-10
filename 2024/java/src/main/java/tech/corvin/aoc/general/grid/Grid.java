@@ -1,6 +1,7 @@
 package tech.corvin.aoc.general.grid;
 
 import java.util.*;
+import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -76,7 +77,7 @@ public class Grid<T> {
     }
 
     public List<Coordinate> getOrthogonalCells(Coordinate center) {
-        var offsets = List.of(TOP_RIGHT, TOP_LEFT, BOTTOM_RIGHT, BOTTOM_LEFT);
+        var offsets = List.of(TOP, RIGHT, BOTTOM, LEFT);
         return offsets.stream().map(center::offset).toList();
     }
 
@@ -134,8 +135,8 @@ public class Grid<T> {
         }
     }
 
-    public Set<Coordinate> bfs(Coordinate start, T goal, Predicate<Coordinate> addedFilter) {
-        var goals = new HashSet<Coordinate>();
+    public List<Coordinate> bfs(Coordinate start, T goal, BiPredicate<Coordinate, Coordinate> addedFilter) {
+        var goals = new ArrayList<Coordinate>();
 
         var queue = new LinkedList<>(List.of(start));
         var seen = new HashSet<>(List.of(start));
@@ -144,10 +145,12 @@ public class Grid<T> {
             var current = queue.removeFirst();
             var neighbors = getOrthogonalCells(current)
                     .stream()
-                    .filter((c) -> c.isOOB(this))
+                    .filter((c) -> !c.isOOB(this))
                     .filter(Predicate.not(seen::contains))
-                    .filter(addedFilter)
+                    .filter((c) -> addedFilter.test(current, c))
                     .toList();
+
+            seen.add(current);
 
             goals.addAll(neighbors.stream().filter((c) -> getCell(c).equals(goal)).toList());
             queue.addAll(neighbors.stream().filter((c) -> !getCell(c).equals(goal)).toList());

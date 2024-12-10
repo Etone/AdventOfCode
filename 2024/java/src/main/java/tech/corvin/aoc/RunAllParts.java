@@ -33,7 +33,7 @@ public class RunAllParts {
                                 " (took " + (end - start) + "ms)"
                 );
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                // Ignore
             }
         });
     }

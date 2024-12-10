@@ -15,11 +15,14 @@ public class Part1 implements Part<Integer> {
     @Override
     public Integer solve() throws IOException {
         var topographicMap = Helper.mapStringGridToIntGrid(Helper.getInputAsGrid("day10.txt"));
-        getPaths(topographicMap);
-        return 0;
+        return getScore(topographicMap);
     }
 
-    private void getPaths(Grid<Integer> map) {
-
+    private int getScore(Grid<Integer> map) {
+        return map.findAll(0)
+                .stream()
+                .map((c) -> map.bfs(c, 9, (current, next) -> map.getCell(current) + 1 == map.getCell(next)).stream().distinct().collect(Collectors.toList()))
+                .mapToInt(List::size)
+                .sum();
     }
 }

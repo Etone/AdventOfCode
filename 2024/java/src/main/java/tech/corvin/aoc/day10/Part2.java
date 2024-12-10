@@ -2,15 +2,26 @@ package tech.corvin.aoc.day10;
 
 import tech.corvin.aoc.general.Helper;
 import tech.corvin.aoc.general.Part;
+import tech.corvin.aoc.general.grid.Grid;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class Part2 implements Part<Integer> {
 
     @Override
     public Integer solve() throws IOException {
-        Helper.getResourceFileAsString("day0.txt");
-        return 0;
+        var topographicMap = Helper.mapStringGridToIntGrid(Helper.getInputAsGrid("day10.txt"));
+        return getScore(topographicMap);
+    }
+
+    private int getScore(Grid<Integer> map) {
+        return map.findAll(0)
+                .stream()
+                .map((c) -> map.bfs(c, 9, (current, next) -> map.getCell(current) + 1 == map.getCell(next)))
+                .mapToInt(List::size)
+                .sum();
     }
 }
