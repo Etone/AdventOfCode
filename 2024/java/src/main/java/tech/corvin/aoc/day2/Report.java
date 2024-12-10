@@ -16,8 +16,8 @@ public record Report(List<Integer> levels) {
         var dampenedReports = new ArrayList<Report>();
         dampenedReports.add(this);
 
-        for (int i = 0; i <= levels.size()-1; i++) {
-            var levelsAfter = levels.subList(i+1, levels.size());
+        for (int i = 0; i <= levels.size() - 1; i++) {
+            var levelsAfter = levels.subList(i + 1, levels.size());
             var levelsBefore = levels.subList(0, i);
             var dampenedLevels = Stream.concat(levelsBefore.stream(), levelsAfter.stream()).toList();
             dampenedReports.add(new Report(dampenedLevels));
@@ -33,7 +33,7 @@ public record Report(List<Integer> levels) {
     private boolean checkAdj() {
         return IntStream.range(0, levels.size() - 1).allMatch((index) -> {
                     var diff = Math.abs(levels.get(index) - levels.get(index + 1));
-                    return diff >=1 && diff <= 3;
+                    return diff >= 1 && diff <= 3;
                 }
         );
     }

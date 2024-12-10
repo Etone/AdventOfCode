@@ -77,8 +77,8 @@ public class Part2 implements Part<Integer> {
     }
 
     private int compare(int a, int b) {
-        if (rules.contains(new IntPair(a,b))) return -1;
-        else if (rules.contains(new IntPair(b,a))) return 1;
+        if (rules.contains(new IntPair(a, b))) return -1;
+        else if (rules.contains(new IntPair(b, a))) return 1;
         return 0;
     }
 }

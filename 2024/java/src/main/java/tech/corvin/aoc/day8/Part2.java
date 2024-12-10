@@ -18,7 +18,7 @@ public class Part2 implements Part<Integer> {
     public Integer solve() throws IOException {
         var grid = Helper.getInputAsGrid("day8.txt");
 
-        var  antinodes = new HashSet<Coordinate>();
+        var antinodes = new HashSet<Coordinate>();
 
         var lookup = grid.lookup(List.of("."));
 

@@ -23,7 +23,7 @@ public class Part1 implements Part<Integer> {
         var matcher = pattern.matcher(input);
 
         while (matcher.find()) {
-            var validInstruction = new MultiplyInstruction(Integer.parseInt(matcher.group(1)),Integer.parseInt(matcher.group(2))); //Matching Groups are indexed starting at 1
+            var validInstruction = new MultiplyInstruction(Integer.parseInt(matcher.group(1)), Integer.parseInt(matcher.group(2))); //Matching Groups are indexed starting at 1
             validInstructions.add(validInstruction);
         }
         return validInstructions;

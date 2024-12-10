@@ -23,7 +23,6 @@ public class Part1 implements Part<Long> {
     }
 
 
-
     private List<Integer> buildDisk(String diskmap) {
         var disk = new ArrayList<Integer>();
 

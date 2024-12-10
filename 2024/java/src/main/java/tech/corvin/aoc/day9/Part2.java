@@ -47,7 +47,7 @@ public class Part2 implements Part<Long> {
         for (var fileId : filesByIdReversed) {
             var file = disk.get(fileId);
             var sizeNeeded = file.diff();
-            var space = freeSpaces.stream().filter((free) -> free.diff() >= sizeNeeded).filter(free -> free.left() < file.left() ).findFirst();
+            var space = freeSpaces.stream().filter((free) -> free.diff() >= sizeNeeded).filter(free -> free.left() < file.left()).findFirst();
             if (space.isEmpty()) continue;
             var newFile = new IntPair(space.get().left(), space.get().left() + sizeNeeded);
             disk.put(fileId, newFile);

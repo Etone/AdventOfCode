@@ -2,7 +2,7 @@ package tech.corvin.aoc.day9;
 
 import java.util.stream.IntStream;
 
-public record FileOnDisk (
+public record FileOnDisk(
         int start,
         int end,
         int fileId

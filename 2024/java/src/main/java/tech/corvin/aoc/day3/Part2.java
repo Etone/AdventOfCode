@@ -39,7 +39,7 @@ public class Part2 implements Part<Integer> {
             }
 
             if (enabled) {
-                var validInstruction = new MultiplyInstruction(Integer.parseInt(matcher.group(1)),Integer.parseInt(matcher.group(2)));
+                var validInstruction = new MultiplyInstruction(Integer.parseInt(matcher.group(1)), Integer.parseInt(matcher.group(2)));
                 validInstructions.add(validInstruction);
             }
         }

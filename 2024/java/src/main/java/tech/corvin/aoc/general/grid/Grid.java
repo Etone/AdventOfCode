@@ -118,7 +118,7 @@ public class Grid<T> {
     }
 
     public <R> Grid<R> map(Function<T, R> mapper) {
-        R[][] copy = (R[][])new Object[length()][width()];
+        R[][] copy = (R[][]) new Object[length()][width()];
         for (int row = 0; row < length(); row++) {
             for (int col = 0; col < width(); col++) {
                 copy[row][col] = mapper.apply(value[row][col]);
@@ -135,20 +135,27 @@ public class Grid<T> {
         }
     }
 
-    public List<Coordinate> bfs(Coordinate start, T goal, BiPredicate<Coordinate, Coordinate> addedFilter) {
+    public List<Coordinate> bfs(
+            Coordinate start,
+            T goal,
+            Function<Coordinate, List<Coordinate>> neighboringCellProvider,
+            BiPredicate<Coordinate, Coordinate> addedFilter
+    ) {
         var goals = new ArrayList<Coordinate>();
 
         var queue = new LinkedList<>(List.of(start));
         var seen = new HashSet<>(List.of(start));
 
-        while(!queue.isEmpty()) {
+        while (!queue.isEmpty()) {
             var current = queue.removeFirst();
-            var neighbors = getOrthogonalCells(current)
-                    .stream()
-                    .filter((c) -> !c.isOOB(this))
-                    .filter(Predicate.not(seen::contains))
-                    .filter((c) -> addedFilter.test(current, c))
-                    .toList();
+
+            var neighbors = findNeighbors(
+                    current,
+                    neighboringCellProvider,
+                    (c) -> !c.isOOB(this),
+                    Predicate.not(seen::contains),
+                    (c) -> addedFilter.test(current, c)
+            );
 
             seen.add(current);
 
@@ -170,10 +177,19 @@ public class Grid<T> {
     }
 
     private T[][] copyArray() {
-        T[][] copy = (T[][])new Object[length()][width()]; //Might not be the best way to clone generic 2D array
+        T[][] copy = (T[][]) new Object[length()][width()]; //Might not be the best way to clone generic 2D array
         for (int row = 0; row < length(); row++) {
             copy[row] = Arrays.copyOf(value[row], width());
         }
         return copy;
+    }
+
+    @SafeVarargs
+    private List<Coordinate> findNeighbors(Coordinate from,
+                                           Function<Coordinate, List<Coordinate>> cellProvider,
+                                           Predicate<Coordinate>... filters
+    ) {
+        var compositePredicate = Arrays.stream(filters).reduce(identity -> true, Predicate::and);
+        return cellProvider.apply(from).stream().filter(compositePredicate).toList();
     }
 }

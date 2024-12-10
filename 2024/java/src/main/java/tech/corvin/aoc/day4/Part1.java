@@ -19,7 +19,7 @@ public class Part1 implements Part<Integer> {
 
     private int checkGrid() {
         var xmas = 0;
-        for (int row = 0; row < grid.length(); row ++) {
+        for (int row = 0; row < grid.length(); row++) {
             for (int col = 0; col < grid.width(); col++) {
                 xmas += checkForXMAS(row, col);
             }
@@ -36,13 +36,13 @@ public class Part1 implements Part<Integer> {
         //Check for MAS in each direction
         for (var dr = -1; dr <= 1; dr++) {
 
-            if (row + 3 * dr < 0 || row + 3* dr >= grid.length()) continue;
+            if (row + 3 * dr < 0 || row + 3 * dr >= grid.length()) continue;
 
             for (var dc = -1; dc <= 1; dc++) {
 
                 if (dr == 0 && dc == 0) continue;
 
-                if (column + 3 * dc < 0 || column + 3* dc >= grid.width()) continue;
+                if (column + 3 * dc < 0 || column + 3 * dc >= grid.width()) continue;
 
                 if (grid.getCell(coordinate.offset(dr, dc)).equals("M")
                         && grid.getCell(coordinate.offset(2 * dr, 2 * dc)).equals("A")

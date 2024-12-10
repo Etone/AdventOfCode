@@ -19,7 +19,7 @@ public class Part1 implements Part<Integer> {
 
     @Override
     public Integer solve() throws IOException {
-        grid= Helper.getInputAsGrid("day6.txt");
+        grid = Helper.getInputAsGrid("day6.txt");
         guard = new Guard(grid.findFirst("^").orElseThrow());
         path.add(guard.getPosition());
 
