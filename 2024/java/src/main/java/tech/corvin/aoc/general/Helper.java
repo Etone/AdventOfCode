@@ -1,6 +1,5 @@
 package tech.corvin.aoc.general;
 
-import tech.corvin.aoc.general.grid.Coordinate;
 import tech.corvin.aoc.general.grid.Grid;
 
 import java.io.BufferedReader;

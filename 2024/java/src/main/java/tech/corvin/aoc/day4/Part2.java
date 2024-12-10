@@ -1,9 +1,9 @@
 package tech.corvin.aoc.day4;
 
-import tech.corvin.aoc.general.grid.Coordinate;
-import tech.corvin.aoc.general.grid.Grid;
 import tech.corvin.aoc.general.Helper;
 import tech.corvin.aoc.general.Part;
+import tech.corvin.aoc.general.grid.Coordinate;
+import tech.corvin.aoc.general.grid.Grid;
 
 import java.io.IOException;
 import java.util.Collections;

@@ -4,12 +4,9 @@ import tech.corvin.aoc.general.Helper;
 import tech.corvin.aoc.general.Part;
 
 import java.io.IOException;
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.IntStream;
 
 public class Part1 implements Part<Long> {
 

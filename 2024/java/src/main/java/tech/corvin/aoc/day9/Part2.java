@@ -52,7 +52,8 @@ public class Part2 implements Part<Long> {
             var newFile = new IntPair(space.get().left(), space.get().left() + sizeNeeded);
             disk.put(fileId, newFile);
             freeSpaces.remove(space.get());
-            if (sizeNeeded < space.get().diff()) freeSpaces.add(new IntPair(newFile.right(), space.get().right()));
+            if (sizeNeeded < space.get().diff())
+                freeSpaces.add(new IntPair(newFile.right(), space.get().right()));
         }
     }
 

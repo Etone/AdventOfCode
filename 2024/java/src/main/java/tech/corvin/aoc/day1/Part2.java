@@ -4,7 +4,10 @@ import tech.corvin.aoc.general.Helper;
 import tech.corvin.aoc.general.Part;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Part2 implements Part<Integer> {
