@@ -17,7 +17,8 @@ public class RunAllParts {
 //            new tech.corvin.aoc.day7.Part1(), new tech.corvin.aoc.day7.Part2(),
 //            new tech.corvin.aoc.day8.Part1(), new tech.corvin.aoc.day8.Part2(),
 //            new tech.corvin.aoc.day9.Part1(), new tech.corvin.aoc.day9.Part2(),
-            new tech.corvin.aoc.day10.Part1(), new tech.corvin.aoc.day10.Part2()
+            new tech.corvin.aoc.day10.Part1(), new tech.corvin.aoc.day10.Part2(),
+            new tech.corvin.aoc.day11.Part1(), new tech.corvin.aoc.day11.Part2()
     );
 
     public static void main(String[] args) {
