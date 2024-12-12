@@ -3,7 +3,7 @@ package tech.corvin.aoc.day6;
 import tech.corvin.aoc.general.Helper;
 import tech.corvin.aoc.general.Part;
 import tech.corvin.aoc.general.grid.Coordinate;
-import tech.corvin.aoc.general.grid.Grid;
+import tech.corvin.aoc.general.grid.ArrayGrid;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import java.util.List;
 
 public class Part1 implements Part<Integer> {
 
-    Grid<String> grid;
+    ArrayGrid<String> arrayGrid;
 
     Guard guard;
 
@@ -19,8 +19,8 @@ public class Part1 implements Part<Integer> {
 
     @Override
     public Integer solve() throws IOException {
-        grid = Helper.getInputAsGrid("day6.txt");
-        guard = new Guard(grid.findFirst("^").orElseThrow());
+        arrayGrid = Helper.getInputAsGrid("day6.txt");
+        guard = new Guard(arrayGrid.findFirst("^").orElseThrow());
         path.add(guard.getPosition());
 
         calculatePath();
@@ -30,7 +30,7 @@ public class Part1 implements Part<Integer> {
 
     private void calculatePath() {
         Coordinate guardLocation;
-        while ((guardLocation = guard.takeStep(grid)) != null) {
+        while ((guardLocation = guard.takeStep(arrayGrid)) != null) {
             path.add(guardLocation);
         }
     }

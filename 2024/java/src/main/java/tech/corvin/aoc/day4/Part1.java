@@ -3,13 +3,14 @@ package tech.corvin.aoc.day4;
 import tech.corvin.aoc.general.Helper;
 import tech.corvin.aoc.general.Part;
 import tech.corvin.aoc.general.grid.Coordinate;
+import tech.corvin.aoc.general.grid.ArrayGrid;
 import tech.corvin.aoc.general.grid.Grid;
 
 import java.io.IOException;
 
 public class Part1 implements Part<Integer> {
 
-    Grid<String> grid = new Grid<>(new String[][]{{}});
+    Grid<String> grid = new ArrayGrid<>(new String[][]{{}});
 
     @Override
     public Integer solve() throws IOException {
