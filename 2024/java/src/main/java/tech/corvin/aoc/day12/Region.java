@@ -82,16 +82,21 @@ public class Region {
 
         if (left && bot && !bot_left) corners++;
         if (!left && !bot && !bot_left) corners++;
+        if (!left && !bot && bot_left) corners++;
 
         if (right && bot && !bot_right) corners++;
         if (!right && !bot && !bot_right) corners++;
+        if (!right && !bot && bot_right) corners++;
+
 
         if (left && top && !top_left) corners++;
         if (!left && !top && !top_left) corners++;
+        if (!left && !top && top_left) corners++;
+
 
         if (right && top && !top_right) corners++;
         if (!right && !top && !top_right) corners++;
-
+        if (!right && !top && top_right) corners++;
 
         return corners;
     }
