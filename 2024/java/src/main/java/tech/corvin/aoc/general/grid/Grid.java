@@ -127,6 +127,14 @@ public class Grid<T> {
         }
     }
 
+    public void forEachCoordinate(Consumer<Coordinate> consumer) {
+        for (int row = 0; row < length(); row++) {
+            for (int col = 0; col < width(); col++) {
+                consumer.accept(new Coordinate(row, col));
+            }
+        }
+    }
+
     /**
      * Returns a list with all cells that are reachable from the start coordinate which
      * - fulfill the filter provided by addedFilter
@@ -181,37 +189,39 @@ public class Grid<T> {
         var region = new HashSet<Coordinate>();
         var queue = new ArrayDeque<>(List.of(start));
 
+        var seen = new HashSet<Coordinate>();
+
         while (!queue.isEmpty()) {
             var current = queue.removeFirst();
-            region.add(current);
+            if (seen.contains(current)) continue;
 
-            var seen = new HashSet<Coordinate>();
+            region.add(current);
 
             var neighbors = findNeighbors(
                     current,
                     neighboringCellProvider,
                     Predicate.not(region::contains),
-                    Predicate.not(seen::contains),
                     (c) -> getCell(c).equals(regionValue)
             );
 
-            queue.addAll(neighbors);
             seen.add(current);
+            queue.addAll(neighbors);
         }
         return new Region(region);
     }
 
     public Set<Region> findAllRegions(Function<Coordinate, List<Coordinate>> neighboringCellProvider) {
-        var coordinates = getAllValidCoordinates();
-
         var regions = new HashSet<Region>();
+        var seen = new HashSet<Coordinate>();
 
-        while (!coordinates.isEmpty()) {
-            var current = coordinates.getFirst();
+        forEachCoordinate((current -> {
+            if (seen.contains(current)) return;
+
             var region = findRegion(current, neighboringCellProvider);
+            seen.addAll(region.getValue());
             regions.add(region);
-            coordinates.removeAll(region.getValue());
-        }
+        }));
+
         return regions;
     }
 

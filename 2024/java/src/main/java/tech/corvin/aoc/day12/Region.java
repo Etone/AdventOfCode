@@ -3,8 +3,8 @@ package tech.corvin.aoc.day12;
 import tech.corvin.aoc.general.grid.Coordinate;
 
 import java.util.Set;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
+
+import static tech.corvin.aoc.general.grid.Coordinate.*;
 
 public class Region {
 
@@ -12,10 +12,11 @@ public class Region {
     private final int perimeter;
     private final int sides;
 
+
     public Region(Set<Coordinate> region) {
         value = region;
         perimeter = findPerimeter();
-        sides = 0;
+        sides = findSides();
     }
 
     public int size() {
@@ -43,13 +44,55 @@ public class Region {
     }
 
     private int findPerimeter() {
-        var cells = value
+        return value
                 .stream()
-                .map(Coordinate::getOrthogonal)
-                .flatMap(Set::stream)
-                .collect(Collectors.toSet());
+                .map((cell) -> {
+                    var orthogonal = cell.getOrthogonal()
+                            .stream()
+                            .filter(value::contains)
+                            .toList()
+                            .size();
 
-        cells.removeAll(value);
-        return cells.size();
+                    return 4 - orthogonal;
+                })
+                .mapToInt(Integer::intValue)
+                .sum();
+    }
+
+    private int findSides() {
+        // neat trick, number of corners = number of sides
+        return value
+                .stream()
+                .mapToInt(this::findCorners)
+                .sum();
+    }
+
+    private int findCorners(Coordinate coordinate) {
+        var top = value.contains(coordinate.offset(TOP));
+        var left = value.contains(coordinate.offset(LEFT));
+        var right = value.contains(coordinate.offset(RIGHT));
+        var bot = value.contains(coordinate.offset(BOTTOM));
+
+        var top_left = value.contains(coordinate.offset(TOP_LEFT));
+        var top_right = value.contains(coordinate.offset(TOP_RIGHT));
+        var bot_left = value.contains(coordinate.offset(BOTTOM_LEFT));
+        var bot_right = value.contains(coordinate.offset(BOTTOM_RIGHT));
+
+        var corners = 0;
+
+        if (left && bot && !bot_left) corners++;
+        if (!left && !bot && !bot_left) corners++;
+
+        if (right && bot && !bot_right) corners++;
+        if (!right && !bot && !bot_right) corners++;
+
+        if (left && top && !top_left) corners++;
+        if (!left && !top && !top_left) corners++;
+
+        if (right && top && !top_right) corners++;
+        if (!right && !top && !top_right) corners++;
+
+
+        return corners;
     }
 }
