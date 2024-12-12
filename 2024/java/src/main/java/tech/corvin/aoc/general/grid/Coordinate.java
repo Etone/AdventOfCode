@@ -1,6 +1,8 @@
 package tech.corvin.aoc.general.grid;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public record Coordinate(
         int row,
@@ -44,8 +46,8 @@ public record Coordinate(
         return row < 0 || column < 0 || row > g.length() - 1 || column > g.width() - 1;
     }
 
-    public List<Coordinate> getOrthogonal() {
+    public Set<Coordinate> getOrthogonal() {
         var offsets = List.of(TOP, RIGHT, BOTTOM, LEFT);
-        return offsets.stream().map(this::offset).toList();
+        return offsets.stream().map(this::offset).collect(Collectors.toUnmodifiableSet());
     }
 }

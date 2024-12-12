@@ -1,5 +1,8 @@
 package tech.corvin.aoc.general.grid;
 
+import tech.corvin.aoc.day12.Region;
+
+import java.sql.Array;
 import java.util.*;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
@@ -56,6 +59,18 @@ public class Grid<T> {
     public List<Coordinate> getOrthogonalCells(Coordinate center) {
         var offsets = List.of(TOP, RIGHT, BOTTOM, LEFT);
         return offsets.stream().map(center::offset).filter(c -> !c.isOOB(this)).toList();
+    }
+
+    public List<Coordinate> getAllValidCoordinates() {
+        var coordinates = new ArrayList<Coordinate>();
+
+        for (int row = 0; row < length(); row++) {
+            for (int col = 0; col < width(); col++) {
+                coordinates.add(new Coordinate(row, col));
+            }
+        }
+
+        return coordinates;
     }
 
     public Optional<Coordinate> findFirst(T search) {
@@ -151,6 +166,53 @@ public class Grid<T> {
             queue.addAll(neighbors.stream().filter((c) -> !getCell(c).equals(goal)).toList());
         }
         return goals;
+    }
+
+    /**
+     * Find regions with the same value as the one in the starting cell
+     * Uses breadth-first flood-fill to do so
+     *
+     * @param start coordinate to start from
+     * @param neighboringCellProvider Function which provides "reachable" cells (e.g. orthogonal neighbors)
+     * @return Set of Coordinates that are in the region
+     */
+    public Region findRegion(Coordinate start, Function<Coordinate, List<Coordinate>> neighboringCellProvider) {
+        var regionValue = getCell(start);
+        var region = new HashSet<Coordinate>();
+        var queue = new ArrayDeque<>(List.of(start));
+
+        while (!queue.isEmpty()) {
+            var current = queue.removeFirst();
+            region.add(current);
+
+            var seen = new HashSet<Coordinate>();
+
+            var neighbors = findNeighbors(
+                    current,
+                    neighboringCellProvider,
+                    Predicate.not(region::contains),
+                    Predicate.not(seen::contains),
+                    (c) -> getCell(c).equals(regionValue)
+            );
+
+            queue.addAll(neighbors);
+            seen.add(current);
+        }
+        return new Region(region);
+    }
+
+    public Set<Region> findAllRegions(Function<Coordinate, List<Coordinate>> neighboringCellProvider) {
+        var coordinates = getAllValidCoordinates();
+
+        var regions = new HashSet<Region>();
+
+        while (!coordinates.isEmpty()) {
+            var current = coordinates.getFirst();
+            var region = findRegion(current, neighboringCellProvider);
+            regions.add(region);
+            coordinates.removeAll(region.getValue());
+        }
+        return regions;
     }
 
     @Override
