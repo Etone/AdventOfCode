@@ -48,15 +48,14 @@ public record ClawMachine(
         * - Subtract formulas
         * by * ax * A - bx * ay * A = px * by - py * bx
         *
-        * - Divide to get A =
-        *
+        * - Divide to get A
+         * ASSUMPTION, ax * by - ay * bx != 0, else we would divide by zero, which would make this a lot harder
         * A = (px * by - py * bx) / (ax * by - ay * bx)
         *
         * - calculate B from this result
         * ax * A + bx * B = px
         * B = (px - ax * A) / bx
         *
-        * ASSUMPTION, ax * by - ay * bx != 0, else we would divide by zero, which would make this a lot harder
         *
         * Using floating numbers here, since these equations will always intersect somewhere
         * We can't partially press buttons, so we need to filter these solutions out later
