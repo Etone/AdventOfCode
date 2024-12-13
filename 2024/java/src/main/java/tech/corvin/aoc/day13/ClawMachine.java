@@ -56,6 +56,8 @@ public record ClawMachine(
         * ax * A + bx * B = px
         * B = (px - ax * A) / bx
         *
+        * ASSUMPTION, ax * by - ay * bx != 0, else we would divide by zero, which would make this a lot harder
+        *
         * Using floating numbers here, since these equations will always intersect somewhere
         * We can't partially press buttons, so we need to filter these solutions out later
         */
