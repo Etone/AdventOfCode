@@ -80,23 +80,20 @@ public class Region {
 
         var corners = 0;
 
+        // Corner check by checking if specific neighbors are not in region
+        // First checking convex corners, then concave corners
+
         if (left && bot && !bot_left) corners++;
-        if (!left && !bot && !bot_left) corners++;
-        if (!left && !bot && bot_left) corners++;
+        if (!left && !bot) corners++;
 
         if (right && bot && !bot_right) corners++;
-        if (!right && !bot && !bot_right) corners++;
-        if (!right && !bot && bot_right) corners++;
-
+        if (!right && !bot) corners++;
 
         if (left && top && !top_left) corners++;
-        if (!left && !top && !top_left) corners++;
-        if (!left && !top && top_left) corners++;
-
+        if (!left && !top) corners++;
 
         if (right && top && !top_right) corners++;
-        if (!right && !top && !top_right) corners++;
-        if (!right && !top && top_right) corners++;
+        if (!right && !top) corners++;
 
         return corners;
     }
