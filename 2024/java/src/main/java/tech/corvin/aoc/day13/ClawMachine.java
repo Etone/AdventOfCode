@@ -34,6 +34,28 @@ public record ClawMachine(
     public long findMinimumTokensNeeded() {
         /*
         * Linear Algebra is not my strong suite, so I looked it up
+        *
+        * A = Times A Button was pressed
+        * B = Times B Button was pressed
+        *
+        * ax * A + bx * B = px;
+        * ay * A + by * B = py;
+        *
+        * - Multiply with bx / by
+        * by * ax * A + bx * B * by = px * by
+        * bx * ay * A + by * B * bx = py * bx
+        *
+        * - Subtract formulas
+        * by * ax * A - bx * ay * A = px * by - py * bx
+        *
+        * - Divide to get A =
+        *
+        * A = (px * by - py * bx) / (ax * by - ay * bx)
+        *
+        * - calculate B from this result
+        * ax * A + bx * B = px
+        * B = (px - ax * A) / bx
+        *
         * Using floating numbers here, since these equations will always intersect somewhere
         * We can't partially press buttons, so we need to filter these solutions out later
         */
