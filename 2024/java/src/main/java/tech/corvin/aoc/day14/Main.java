@@ -10,5 +10,8 @@ public class Main {
 
         var result2 = new Part2().solve();
         System.out.println(result2.toString());
+
+        var result3 = new Part2WithImageGeneration().solve();
+        System.out.println(result3);
     }
 }
