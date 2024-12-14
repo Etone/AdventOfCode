@@ -50,32 +50,20 @@ public class Part2 implements Part<String> {
         return Arrays.stream(input.split(System.lineSeparator())).map(Robot::fromString).toList();
     }
 
-    public void printRobots(List<Robot> robots, String filePrefix) {
-        var floor = new String[roomHeight][roomWidth];
-
+    private void printRobots(List<Robot> robots, String filePrefix) {
+        var output = new BufferedImage(roomWidth, roomHeight, BufferedImage.TYPE_INT_RGB);
         for (int row = 0; row < roomHeight; row++) {
             for (int col = 0; col < roomWidth; col++) {
-                floor[row][col] = ".";
+                output.setRGB(col,row, Color.BLACK.getRGB());
             }
         }
 
         robots.forEach((r) -> {
-            floor[r.y()][r.x()] = "#";
+            output.setRGB(r.x(), r.y(), Color.WHITE.getRGB());
         });
-
-        var output = new BufferedImage(roomWidth, roomHeight, BufferedImage.TYPE_INT_RGB);
-
-        for (int row = 0; row < roomHeight; row++) {
-            for (int col = 0; col < roomWidth; col++) {
-                if (floor[row][col].equals("#")) output.setRGB(col, row, Color.WHITE.getRGB());
-                else output.setRGB(col,row, Color.BLACK.getRGB());
-            }
-        }
 
         try {
             File f = new File("/tmp/aoc/day14/" + filePrefix + ".png");
-            f.createNewFile();
-
             ImageIO.write(output, "png", f);
         } catch (IOException e) {
             throw new RuntimeException(e);
