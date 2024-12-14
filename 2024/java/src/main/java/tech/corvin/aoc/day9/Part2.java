@@ -2,7 +2,7 @@ package tech.corvin.aoc.day9;
 
 import tech.corvin.aoc.general.Helper;
 import tech.corvin.aoc.general.Part;
-import tech.corvin.aoc.general.math.IntPair;
+import tech.corvin.aoc.general.math.IntRange;
 
 import java.io.IOException;
 import java.util.*;
@@ -10,8 +10,8 @@ import java.util.stream.IntStream;
 
 
 public class Part2 implements Part<Long> {
-    Map<Integer, IntPair> disk = new HashMap<>();
-    Set<IntPair> freeSpaces = new TreeSet<>();
+    Map<Integer, IntRange> disk = new HashMap<>();
+    Set<IntRange> freeSpaces = new TreeSet<>();
 
     @Override
     public Long solve() throws IOException {
@@ -31,10 +31,10 @@ public class Part2 implements Part<Long> {
             var count = Integer.parseInt(chars[i]);
             if (count == 0) continue;
             if (i % 2 == 0) {
-                disk.put(fileId, new IntPair(nextStart, nextStart + count));
+                disk.put(fileId, new IntRange(nextStart, nextStart + count));
                 fileId++;
             } else {
-                freeSpaces.add(new IntPair(nextStart, nextStart + count));
+                freeSpaces.add(new IntRange(nextStart, nextStart + count));
             }
             nextStart += count;
         }
@@ -46,14 +46,14 @@ public class Part2 implements Part<Long> {
 
         for (var fileId : filesByIdReversed) {
             var file = disk.get(fileId);
-            var sizeNeeded = file.diff();
-            var space = freeSpaces.stream().filter((free) -> free.diff() >= sizeNeeded).filter(free -> free.left() < file.left()).findFirst();
+            var sizeNeeded = file.size();
+            var space = freeSpaces.stream().filter((free) -> free.size() >= sizeNeeded).filter(free -> free.start() < file.start()).findFirst();
             if (space.isEmpty()) continue;
-            var newFile = new IntPair(space.get().left(), space.get().left() + sizeNeeded);
+            var newFile = new IntRange(space.get().start(), space.get().start() + sizeNeeded);
             disk.put(fileId, newFile);
             freeSpaces.remove(space.get());
-            if (sizeNeeded < space.get().diff())
-                freeSpaces.add(new IntPair(newFile.right(), space.get().right()));
+            if (sizeNeeded < space.get().size())
+                freeSpaces.add(new IntRange(newFile.end(), space.get().end()));
         }
     }
 
@@ -61,7 +61,7 @@ public class Part2 implements Part<Long> {
         var checksum = 0L;
         for (var file : disk.entrySet()) {
 
-            checksum += IntStream.range(file.getValue().left(), file.getValue().right()).mapToLong((index) -> (long) index * file.getKey()).sum();
+            checksum += IntStream.range(file.getValue().start(), file.getValue().end()).mapToLong((index) -> (long) index * file.getKey()).sum();
         }
         return checksum;
     }

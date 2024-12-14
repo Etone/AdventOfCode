@@ -2,7 +2,7 @@ package tech.corvin.aoc.day1;
 
 import tech.corvin.aoc.general.Helper;
 import tech.corvin.aoc.general.Part;
-import tech.corvin.aoc.general.math.IntPair;
+import tech.corvin.aoc.general.math.IntRange;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,18 +32,18 @@ public class Part1 implements Part<Integer> {
                 });
     }
 
-    private List<IntPair> pairUpRawLists() {
-        var pairedUp = new ArrayList<IntPair>();
+    private List<IntRange> pairUpRawLists() {
+        var pairedUp = new ArrayList<IntRange>();
         Collections.sort(left);
         Collections.sort(right);
 
         for (int i = 0; i < left.size(); i++) {
-            pairedUp.add(new IntPair(left.get(i), right.get(i)));
+            pairedUp.add(new IntRange(left.get(i), right.get(i)));
         }
         return pairedUp;
     }
 
-    private List<Integer> calculateDifferenceBetweenLocations(List<IntPair> pairedUpLocationIds) {
-        return pairedUpLocationIds.stream().map(IntPair::diff).toList();
+    private List<Integer> calculateDifferenceBetweenLocations(List<IntRange> pairedUpLocationIds) {
+        return pairedUpLocationIds.stream().map(IntRange::size).toList();
     }
 }

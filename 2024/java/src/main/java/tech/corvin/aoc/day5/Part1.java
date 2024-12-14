@@ -2,7 +2,7 @@ package tech.corvin.aoc.day5;
 
 import tech.corvin.aoc.general.Helper;
 import tech.corvin.aoc.general.Part;
-import tech.corvin.aoc.general.math.IntPair;
+import tech.corvin.aoc.general.math.IntRange;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import java.util.List;
 
 public class Part1 implements Part<Integer> {
 
-    List<IntPair> rules;
+    List<IntRange> rules;
 
     List<List<Integer>> pageUpdates;
 
@@ -42,7 +42,7 @@ public class Part1 implements Part<Integer> {
             var x = Integer.parseInt(line.split("\\|")[0]);
             var y = Integer.parseInt(line.split("\\|")[1]);
 
-            return new IntPair(x, y);
+            return new IntRange(x, y);
         }).toList();
     }
 
@@ -57,17 +57,17 @@ public class Part1 implements Part<Integer> {
 
         var rulesToCheck = rules
                 .stream()
-                .filter((rule) -> updates.contains(rule.left()) && updates.contains(rule.right()))
+                .filter((rule) -> updates.contains(rule.start()) && updates.contains(rule.end()))
                 .toList();
 
         return new HashSet<>(allRulesForUpdateList).containsAll(rulesToCheck);
     }
 
-    private List<IntPair> generateAllRules(List<Integer> updates) {
-        var allRules = new ArrayList<IntPair>();
+    private List<IntRange> generateAllRules(List<Integer> updates) {
+        var allRules = new ArrayList<IntRange>();
         for (int i = 0; i < updates.size(); i++) {
             for (int j = i + 1; j < updates.size(); j++) {
-                allRules.add(new IntPair(updates.get(i), updates.get(j)));
+                allRules.add(new IntRange(updates.get(i), updates.get(j)));
             }
         }
         return allRules;
