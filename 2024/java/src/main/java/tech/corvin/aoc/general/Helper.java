@@ -34,6 +34,15 @@ public class Helper {
         return arrayGrid.map(Integer::parseInt);
     }
 
+    private static ArrayGrid<String> arrayGridFromString(String gridAsText) {
+        var rows = gridAsText.split(System.lineSeparator());
+        var result = new String[rows.length][rows[0].length()];
+        for (int i = 0; i < rows.length; i++) {
+            result[i] = rows[i].split("");
+        }
+        return new ArrayGrid<>(result);
+    }
+
     public static <T> List<Map.Entry<T, T>> pairUpList(List<T> a) {
         var pairs = new ArrayList<Map.Entry<T, T>>();
         for (int first = 0; first < a.size(); first++) {
@@ -42,14 +51,5 @@ public class Helper {
             }
         }
         return pairs;
-    }
-
-    private static ArrayGrid<String> arrayGridFromString(String gridAsText) {
-        var rows = gridAsText.split(System.lineSeparator());
-        var result = new String[rows.length][rows[0].length()];
-        for (int i = 0; i < rows.length; i++) {
-            result[i] = rows[i].split("");
-        }
-        return new ArrayGrid<>(result);
     }
 }
