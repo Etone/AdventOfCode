@@ -25,7 +25,7 @@ public class Day6 extends Day2024<Integer, Integer> {
 
     public Day6() throws IOException {
         super(6);
-        parseInput();
+        initializeDay();
     }
 
 
@@ -47,7 +47,7 @@ public class Day6 extends Day2024<Integer, Integer> {
     }
 
 
-    private void parseInput() throws IOException {
+    private void initializeDay() throws IOException {
         grid = inputAsGrid();
         var guardStartPosition = grid.findFirst("^").orElseThrow();
         guard = new Guard(guardStartPosition);

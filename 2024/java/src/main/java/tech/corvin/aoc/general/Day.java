@@ -48,7 +48,7 @@ public abstract class Day<Result1, Result2> {
         System.out.println("Part 2:" + part2().toString());
     }
 
-    public void printWithRuntime() throws IOException {
+    public void printWithRuntime() {
         var start = System.currentTimeMillis();
         var part1 = part1();
         var end = System.currentTimeMillis();
