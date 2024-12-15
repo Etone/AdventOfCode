@@ -1,5 +1,7 @@
 package tech.corvin.aoc.year2024;
 
+import tech.corvin.aoc.general.Day;
+
 import java.io.IOException;
 
 public class DayX extends Day2024<Integer, Integer> {
@@ -22,6 +24,11 @@ public class DayX extends Day2024<Integer, Integer> {
     @Override
     public Integer part2() {
        return 0;
+    }
+
+    @Override
+    public Day<?, ?> initialize() throws IOException {
+        return this;
     }
 
 

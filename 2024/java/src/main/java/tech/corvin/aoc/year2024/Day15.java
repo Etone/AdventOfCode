@@ -1,15 +1,15 @@
 package tech.corvin.aoc.year2024;
 
+import tech.corvin.aoc.general.Day;
 import tech.corvin.aoc.general.grid.Coordinate;
 import tech.corvin.aoc.general.grid.Grid;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
 
 import static tech.corvin.aoc.general.grid.Coordinate.*;
 
-public class Day15 extends Day2024<Long, Integer> {
+public class Day15 extends Day2024<Integer, Integer> {
 
     private Grid<String> warehouse;
     private Coordinate robot;
@@ -18,18 +18,17 @@ public class Day15 extends Day2024<Long, Integer> {
     private Set<Coordinate> walls;
 
     public static void main(String[] args) throws IOException {
-        new Day15().print();
+        new Day15().initialize().print();
     }
 
     public Day15() throws IOException {
         super(15);
-        initializeDay();
     }
 
 
     @Override
-    public Long part1() {
-        return boxes.stream().mapToLong(coordinate -> 100L * coordinate.row() + coordinate.column()).sum();
+    public Integer part1() {
+        return boxes.stream().mapToInt(coordinate -> 100 * coordinate.row() + coordinate.column()).sum();
     }
 
     @Override
@@ -38,7 +37,8 @@ public class Day15 extends Day2024<Long, Integer> {
     }
 
 
-    private void initializeDay() throws IOException {
+    @Override
+    public Day<?, ?> initialize() throws IOException {
         var input = input();
         var mapOfWarehouse = input.split("\n\n")[0];
         var robotInstructions = input.split("\n\n")[1].replace("\n", "");
@@ -56,13 +56,19 @@ public class Day15 extends Day2024<Long, Integer> {
         boxes = new HashSet<>(warehouse.findAll("O"));
         walls = new HashSet<>(warehouse.findAll("#"));
         simulateRobot();
+
+        return this;
     }
 
     private void simulateRobot() {
-        AtomicReference<Coordinate> simulatedRobot = new AtomicReference<>(new Coordinate(robot.row(), robot.column()));
-        moveOffsets.forEach(instruction -> {
-            var robotWantToMove = simulatedRobot.get().offset(instruction);
-            if (walls.contains(robotWantToMove)) return;
+
+        var simulatedRobot = new Coordinate(robot.row(), robot.column());
+
+        for (Coordinate instruction : moveOffsets) {
+            var robotWantToMove = simulatedRobot.offset(instruction);
+
+            if (walls.contains(robotWantToMove)) continue;
+
             if (boxes.contains(robotWantToMove)) {
                 var boxStackToMove = new ArrayDeque<Coordinate>();
                 var box = robotWantToMove;
@@ -72,7 +78,7 @@ public class Day15 extends Day2024<Long, Integer> {
                     boxStackToMove.push(box);
                 }
 
-                if (walls.contains(box.offset(instruction))) return;
+                if (walls.contains(box.offset(instruction))) continue;
 
                 while (!boxStackToMove.isEmpty()) {
                     var boxToMove = boxStackToMove.pop();
@@ -80,7 +86,7 @@ public class Day15 extends Day2024<Long, Integer> {
                     boxes.add(boxToMove.offset(instruction));
                 }
             }
-            simulatedRobot.set(robotWantToMove);
-        });
+            simulatedRobot = robotWantToMove;
+        }
     }
 }

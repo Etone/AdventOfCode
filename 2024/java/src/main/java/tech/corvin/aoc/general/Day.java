@@ -24,6 +24,8 @@ public abstract class Day<Result1, Result2> {
 
     public abstract Result2 part2();
 
+    public abstract Day<?, ?> initialize() throws IOException;
+
     public static String getResourceFileAsString(String fileName) throws IOException {
         ClassLoader classLoader = ClassLoader.getSystemClassLoader();
         try (InputStream is = classLoader.getResourceAsStream(fileName)) {
@@ -48,16 +50,24 @@ public abstract class Day<Result1, Result2> {
         System.out.println("Part 2:" + part2().toString());
     }
 
-    public void printWithRuntime() {
+    public void printWithRuntime() throws IOException {
         var start = System.currentTimeMillis();
-        var part1 = part1();
+        initialize();
         var end = System.currentTimeMillis();
+        System.out.printf("Day %d - Init took %d ms%n", day, end - start);
+
+
+        start = System.currentTimeMillis();
+        var part1 = part1();
+        end = System.currentTimeMillis();
         System.out.printf("Day %d - Part 1: %s (took %d ms)%n", day, part1.toString(), end - start);
 
         start = System.currentTimeMillis();
         var part2 = part2();
         end = System.currentTimeMillis();
         System.out.printf("Day %d - Part 2: %s (took %d ms)%n", day, part2.toString(), end - start);
+
+        System.out.println();
     }
 
     public ArrayGrid<String> arrayGridFromString(String gridAsText) {

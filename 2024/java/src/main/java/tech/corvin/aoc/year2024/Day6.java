@@ -1,5 +1,6 @@
 package tech.corvin.aoc.year2024;
 
+import tech.corvin.aoc.general.Day;
 import tech.corvin.aoc.general.grid.Coordinate;
 import tech.corvin.aoc.general.grid.Grid;
 
@@ -20,12 +21,11 @@ public class Day6 extends Day2024<Integer, Integer> {
     Set<Coordinate> path = new HashSet<>();
 
     public static void main(String[] args) throws IOException {
-        new Day6().print();
+        new Day6().initialize().print();
     }
 
     public Day6() throws IOException {
         super(6);
-        initializeDay();
     }
 
 
@@ -47,7 +47,8 @@ public class Day6 extends Day2024<Integer, Integer> {
     }
 
 
-    private void initializeDay() throws IOException {
+    @Override
+    public Day<?, ?> initialize() throws IOException {
         grid = inputAsGrid();
         var guardStartPosition = grid.findFirst("^").orElseThrow();
         guard = new Guard(guardStartPosition);
@@ -58,6 +59,7 @@ public class Day6 extends Day2024<Integer, Integer> {
         while ((guardLocation = pathGuard.takeStep(grid)) != null) {
             path.add(guardLocation);
         }
+        return this;
     }
 
     // Returns true if path loops

@@ -1,5 +1,7 @@
 package tech.corvin.aoc.year2024;
 
+import tech.corvin.aoc.general.Day;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,12 +14,11 @@ public class Day1 extends Day2024<Integer, Integer> {
     private final List<Integer> right = new ArrayList<>();
 
     public static void main(String[] args) throws IOException {
-        new Day1().print();
+        new Day1().initialize().print();
     }
 
     public Day1() throws IOException {
         super(1);
-        parseInput();
     }
 
 
@@ -42,8 +43,8 @@ public class Day1 extends Day2024<Integer, Integer> {
         return left.stream().mapToInt(location -> location * Collections.frequency(right, location)).sum();
     }
 
-
-    private void parseInput() throws IOException {
+    @Override
+    public Day<?, ?> initialize() throws IOException {
         var locationPairs = input().split(System.lineSeparator());
         Arrays.stream(locationPairs)
                 .map(line -> line.split("\\s+"))
@@ -51,6 +52,7 @@ public class Day1 extends Day2024<Integer, Integer> {
                     left.add(Integer.parseInt(pair[0]));
                     right.add(Integer.parseInt(pair[1]));
                 });
+        return this;
     }
 
     private record LocationPair(

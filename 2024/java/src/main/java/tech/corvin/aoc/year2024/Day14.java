@@ -1,5 +1,7 @@
 package tech.corvin.aoc.year2024;
 
+import tech.corvin.aoc.general.Day;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -28,13 +30,13 @@ public class Day14 extends Day2024<Integer, Integer> {
 
     public static void main(String[] args) throws IOException {
         var day14 = new Day14();
+        day14.initialize();
         day14.print();
         day14.part2WithPNGs();
     }
 
     public Day14() throws IOException {
         super(14);
-        parseInput();
     }
 
 
@@ -78,12 +80,14 @@ public class Day14 extends Day2024<Integer, Integer> {
     }
 
 
-    private void parseInput() throws IOException {
+    @Override
+    public Day<?, ?> initialize() throws IOException {
         var wh = Arrays.stream(input().split("\n\n")[0].split(",")).mapToInt(Integer::parseInt).toArray();
         roomWidth = wh[0];
         roomHeight = wh[1];
 
         robots = Arrays.stream(input().split("\n\n")[1].split(System.lineSeparator())).map(Robot::fromString).toList();
+        return this;
     }
 
     private void printRobots(List<Robot> robots, String filePrefix) {
@@ -94,9 +98,7 @@ public class Day14 extends Day2024<Integer, Integer> {
             }
         }
 
-        robots.forEach((r) -> {
-            output.setRGB(r.x(), r.y(), Color.WHITE.getRGB());
-        });
+        robots.forEach((r) -> output.setRGB(r.x(), r.y(), Color.WHITE.getRGB()));
 
         try {
             Files.createDirectories(Path.of(PATH_TO_FRAMES));

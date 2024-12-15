@@ -1,5 +1,7 @@
 package tech.corvin.aoc.year2024;
 
+import tech.corvin.aoc.general.Day;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Hashtable;
@@ -10,12 +12,11 @@ public class Day11 extends Day2024<Long, Long> {
     private List<Long> stones;
 
     public static void main(String[] args) throws IOException {
-        new Day11().print();
+        new Day11().initialize().print();
     }
 
     public Day11() throws IOException {
         super(11);
-        parseInput();
     }
 
 
@@ -30,11 +31,12 @@ public class Day11 extends Day2024<Long, Long> {
 
     }
 
-
-    private void parseInput() throws IOException {
+    @Override
+    public Day<?, ?> initialize() throws IOException {
         stones = Arrays.stream(input().split(" "))
                 .map(Long::parseLong)
                 .toList();
+        return this;
     }
 
     private static class Stone {
@@ -46,7 +48,7 @@ public class Day11 extends Day2024<Long, Long> {
             if (cache.containsKey(key)) {
                 hits++;
                 return cache.get(key);
-            };
+            }
             if (times == 0) return 1L;
 
             var result = 0L;

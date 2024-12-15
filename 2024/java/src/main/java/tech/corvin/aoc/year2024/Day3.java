@@ -1,6 +1,8 @@
 package tech.corvin.aoc.year2024;
 
 
+import tech.corvin.aoc.general.Day;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,12 +15,11 @@ public class Day3 extends Day2024<Integer, Integer> {
 
 
     public static void main(String[] args) throws IOException {
-        new Day3().print();
+        new Day3().initialize().print();
     }
 
     public Day3() throws IOException {
         super(3);
-        parseInput();
     }
 
 
@@ -32,8 +33,8 @@ public class Day3 extends Day2024<Integer, Integer> {
         return instructions.stream().filter(MultiplyInstruction::enabled).mapToInt(MultiplyInstruction::execute).sum();
     }
 
-
-    private void parseInput() throws IOException {
+     @Override
+    public Day<?, ?> initialize() throws IOException {
         var enabled = true;
         var pattern = Pattern.compile("do\\(\\)|don't\\(\\)|mul\\((\\d{1,3}),(\\d{1,3})\\)");
         var matcher = pattern.matcher(input());
@@ -58,6 +59,7 @@ public class Day3 extends Day2024<Integer, Integer> {
             );
             instructions.add(validInstruction);
         }
+        return this;
     }
 
     private record MultiplyInstruction(int a, int b, boolean enabled) {

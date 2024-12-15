@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class Day1Test {
 
-    Day<?,?> cut = new Day1();
+    Day<?,?> cut = new Day1().initialize();
 
     public Day1Test() throws IOException {
     }

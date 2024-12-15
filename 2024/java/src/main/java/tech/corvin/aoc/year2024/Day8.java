@@ -1,5 +1,6 @@
 package tech.corvin.aoc.year2024;
 
+import tech.corvin.aoc.general.Day;
 import tech.corvin.aoc.general.StringConstants;
 import tech.corvin.aoc.general.grid.Coordinate;
 import tech.corvin.aoc.general.grid.CoordinatePair;
@@ -18,12 +19,11 @@ public class Day8 extends Day2024<Integer, Integer> {
     private final List<CoordinatePair> pairs = new ArrayList<>();
 
     public static void main(String[] args) throws IOException {
-        new Day8().print();
+        new Day8().initialize().print();
     }
 
     public Day8() throws IOException {
         super(8);
-        initializeDay();
     }
 
 
@@ -53,7 +53,8 @@ public class Day8 extends Day2024<Integer, Integer> {
     }
 
 
-    private void initializeDay() throws IOException {
+    @Override
+    public Day<?, ?> initialize() throws IOException {
         grid = inputAsGrid();
         var lookupTable = grid.lookup(List.of("."));
 
@@ -67,5 +68,6 @@ public class Day8 extends Day2024<Integer, Integer> {
                     .toList();
             pairs.addAll(pairsFromAntenna);
         }
+        return this;
     }
 }

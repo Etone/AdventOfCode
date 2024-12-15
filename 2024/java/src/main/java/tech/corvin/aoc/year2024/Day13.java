@@ -1,5 +1,7 @@
 package tech.corvin.aoc.year2024;
 
+import tech.corvin.aoc.general.Day;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Set;
@@ -13,12 +15,11 @@ public class Day13 extends Day2024<Long, Long> {
     private Set<ClawMachine> machinesWithOffset;
 
     public static void main(String[] args) throws IOException {
-        new Day13().print();
+        new Day13().initialize().print();
     }
 
     public Day13() throws IOException {
         super(13);
-        parseInput();
     }
 
 
@@ -32,8 +33,8 @@ public class Day13 extends Day2024<Long, Long> {
        return machinesWithOffset.stream().mapToLong(ClawMachine::findMinimumTokensNeeded).sum();
     }
 
-
-    private void parseInput() throws IOException {
+    @Override
+    public Day<?, ?> initialize() throws IOException {
         machinesWithoutOffset = Arrays.stream(input().split("\n\n"))
                 .map(machine -> ClawMachine.fromString(machine, 0))
                 .collect(Collectors.toSet());
@@ -41,6 +42,8 @@ public class Day13 extends Day2024<Long, Long> {
         machinesWithOffset = Arrays.stream(input().split("\n\n"))
                 .map(machine -> ClawMachine.fromString(machine, 10_000_000_000_000L))
                 .collect(Collectors.toSet());
+
+        return this;
     }
 
     private record ClawMachine(

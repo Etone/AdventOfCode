@@ -1,5 +1,6 @@
 package tech.corvin.aoc.year2024;
 
+import tech.corvin.aoc.general.Day;
 import tech.corvin.aoc.general.math.IntRange;
 
 import java.io.IOException;
@@ -13,16 +14,15 @@ public class Day9 extends Day2024<Long, Long> {
     private List<Integer> uncompressedDisk;
     private List<Integer> compressedDisk;
 
-    private Map<Integer, IntRange> disk = new HashMap<>();
-    private Set<IntRange> freeSpaces = new TreeSet<>();
+    private final Map<Integer, IntRange> disk = new HashMap<>();
+    private final Set<IntRange> freeSpaces = new TreeSet<>();
 
     public static void main(String[] args) throws IOException {
-        new Day9().print();
+        new Day9().initialize().print();
     }
 
     public Day9() throws IOException {
         super(9);
-        parseInput();
     }
 
 
@@ -36,15 +36,15 @@ public class Day9 extends Day2024<Long, Long> {
        return checksumV2();
     }
 
-
-    private void parseInput() throws IOException {
+    @Override
+    public Day<?, ?> initialize() throws IOException {
         uncompressedDisk = buildDisk(input());
         compressedDisk = compressDisk();
 
         buildDiskV2(input());
         compressDiskV2();
+        return this;
     }
-
 
     private List<Integer> buildDisk(String diskmap) {
         var disk = new ArrayList<Integer>();

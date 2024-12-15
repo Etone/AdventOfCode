@@ -1,5 +1,7 @@
 package tech.corvin.aoc.year2024;
 
+import tech.corvin.aoc.general.Day;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,12 +15,11 @@ public class Day7 extends Day2024<Long, Long> {
     private List<Instruction> instructions;
 
     public static void main(String[] args) throws IOException {
-        new Day7().print();
+        new Day7().initialize().print();
     }
 
     public Day7() throws IOException {
         super(7);
-        parseInput();
     }
 
 
@@ -42,9 +43,12 @@ public class Day7 extends Day2024<Long, Long> {
                 .sum();
     }
 
-
-    private void parseInput() throws IOException {
-        instructions = Arrays.stream(input().split(System.lineSeparator())).map(Instruction::fromString).toList();
+    @Override
+    public Day<?, ?> initialize() throws IOException {
+        instructions = Arrays.stream(input().split(System.lineSeparator()))
+                .map(Instruction::fromString)
+                .toList();
+        return this;
     }
 
     private record Instruction(

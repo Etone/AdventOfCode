@@ -1,12 +1,12 @@
 package tech.corvin.aoc.year2024;
 
+import tech.corvin.aoc.general.Day;
 import tech.corvin.aoc.general.grid.Coordinate;
 import tech.corvin.aoc.general.grid.Grid;
 
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Day10 extends Day2024<Integer, Integer> {
 
@@ -17,12 +17,11 @@ public class Day10 extends Day2024<Integer, Integer> {
     private List<List<Coordinate>> peaks;
 
     public static void main(String[] args) throws IOException {
-        new Day10().print();
+        new Day10().initialize().print();
     }
 
     public Day10() throws IOException {
         super(10);
-        parseInput();
     }
 
     @Override
@@ -35,17 +34,18 @@ public class Day10 extends Day2024<Integer, Integer> {
         return peaks.stream().mapToInt(List::size).sum();
     }
 
-
-    private void parseInput() throws IOException {
+    @Override
+    public Day<?, ?> initialize() throws IOException {
         topographicMap = inputAsGrid().map(Integer::parseInt);
 
         peaks = topographicMap.findAll(0)
                 .stream()
                 .map((c) -> topographicMap.bfs(
-                                c,
-                                9,
-                                topographicMap::getOrthogonalCells,
-                                (current, next) -> topographicMap.getCell(current) + 1 == topographicMap.getCell(next))
+                        c,
+                        9,
+                        topographicMap::getOrthogonalCells,
+                        (current, next) -> topographicMap.getCell(current) + 1 == topographicMap.getCell(next))
                 ).toList();
+        return this;
     }
 }

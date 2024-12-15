@@ -1,6 +1,7 @@
 package tech.corvin.aoc.year2024;
 
 
+import tech.corvin.aoc.general.Day;
 import tech.corvin.aoc.general.grid.Coordinate;
 import tech.corvin.aoc.general.grid.Grid;
 
@@ -17,12 +18,11 @@ public class Day4 extends Day2024<Integer, Integer> {
     private Grid<String> grid;
 
     public static void main(String[] args) throws IOException {
-        new Day4().print();
+        new Day4().initialize().print();
     }
 
     public Day4() throws IOException {
         super(4);
-        parseInput();
     }
 
 
@@ -41,8 +41,9 @@ public class Day4 extends Day2024<Integer, Integer> {
     }
 
 
-    private void parseInput() throws IOException {
+    public Day<?, ?> initialize() throws IOException {
         grid = inputAsGrid();
+        return this;
     }
 
     private int checkForXMAS(Coordinate c) {

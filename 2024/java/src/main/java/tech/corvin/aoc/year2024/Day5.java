@@ -1,5 +1,6 @@
 package tech.corvin.aoc.year2024;
 
+import tech.corvin.aoc.general.Day;
 import tech.corvin.aoc.general.math.IntRange;
 
 import java.io.IOException;
@@ -17,12 +18,11 @@ public class Day5 extends Day2024<Integer, Integer> {
     List<List<Integer>> pageUpdates;
 
     public static void main(String[] args) throws IOException {
-        new Day5().print();
+        new Day5().initialize().print();
     }
 
     public Day5() throws IOException {
         super(5);
-        parseInput();
     }
 
 
@@ -47,14 +47,15 @@ public class Day5 extends Day2024<Integer, Integer> {
                 .sum();
     }
 
-
-    private void parseInput() throws IOException {
+    @Override
+    public Day<?, ?> initialize() throws IOException {
         var input = input();
         var rulesString = input.split("\n\n")[0];
         var pageUpdateString = input.split("\n\n")[1];
 
         parseRules(rulesString);
         parsePageUpdates(pageUpdateString);
+        return this;
     }
 
     private void parseRules(String rulesString) {
