@@ -60,7 +60,7 @@ public abstract class Day<Result1, Result2> {
         System.out.printf("Day %d - Part 2: %s (took %d ms)%n", day, part2.toString(), end - start);
     }
 
-    private ArrayGrid<String> arrayGridFromString(String gridAsText) {
+    public ArrayGrid<String> arrayGridFromString(String gridAsText) {
         var rows = gridAsText.split(System.lineSeparator());
         var result = new String[rows.length][rows[0].length()];
         for (int i = 0; i < rows.length; i++) {
