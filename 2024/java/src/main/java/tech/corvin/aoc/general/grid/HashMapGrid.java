@@ -1,7 +1,5 @@
 package tech.corvin.aoc.general.grid;
 
-import tech.corvin.aoc.day12.Region;
-
 import java.util.*;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;

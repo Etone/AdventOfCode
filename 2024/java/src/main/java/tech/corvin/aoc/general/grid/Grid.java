@@ -1,7 +1,5 @@
 package tech.corvin.aoc.general.grid;
 
-import tech.corvin.aoc.day12.Region;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;

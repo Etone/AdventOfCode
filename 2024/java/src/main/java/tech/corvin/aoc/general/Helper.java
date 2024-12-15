@@ -34,16 +34,6 @@ public class Helper {
         return arrayGrid.map(Integer::parseInt);
     }
 
-    public static <T> List<Map.Entry<T, T>> pairUpList(List<T> a) {
-        var pairs = new ArrayList<Map.Entry<T, T>>();
-        for (int first = 0; first < a.size(); first++) {
-            for (int second = first + 1; second < a.size(); second++) {
-                pairs.add(Map.entry(a.get(first), a.get(second)));
-            }
-        }
-        return pairs;
-    }
-
     private static ArrayGrid<String> arrayGridFromString(String gridAsText) {
         var rows = gridAsText.split(System.lineSeparator());
         var result = new String[rows.length][rows[0].length()];

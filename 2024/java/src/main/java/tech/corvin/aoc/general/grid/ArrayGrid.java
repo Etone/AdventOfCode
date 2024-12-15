@@ -1,7 +1,5 @@
 package tech.corvin.aoc.general.grid;
 
-import tech.corvin.aoc.day12.Region;
-
 import java.util.*;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
@@ -108,7 +106,7 @@ public class ArrayGrid<T> implements Grid<T> {
 
     @Override
     public Map<T, List<Coordinate>> lookup(List<T> exclude) {
-        var lookup = new HashMap<T, List<Coordinate>>();
+        var lookup = new Hashtable<T, List<Coordinate>>();
         for (int row = 0; row < length(); row++) {
             for (int col = 0; col < width(); col++) {
                 var val = getCell(row, col);
